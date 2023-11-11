@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
+import React from 'react'
 
 type User = {
   id: number;
@@ -16,6 +17,7 @@ type User = {
 interface AuthContextType {
   authState: User | null;
   setAuthState: (x: User) => void;
+  authInfo: User | null;
   logout: () => void;
   isAuthenticated: () => boolean;
 }
@@ -72,6 +74,7 @@ export function AuthProvider({
       value={{
         authState,
         setAuthState: (authInfo: User) => setAuthInfo(authInfo),
+        authInfo: authState,
         logout,
         isAuthenticated,
       }}

@@ -8,6 +8,7 @@ import Logo from '../../images/logo/logo.svg';
 
 import useAuth from '../../contexts/auth';
 import { VITES_BACKEND_URL } from '../../utils/constants';
+import React from 'react';
 
 const SignIn = () => {
   const { setAuthState } = useAuth();
