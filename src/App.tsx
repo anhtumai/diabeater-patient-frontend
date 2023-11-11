@@ -2,6 +2,8 @@ import { Suspense, lazy, useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+
 import ECommerce from './pages/Dashboard/ECommerce';
 import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
@@ -10,7 +12,18 @@ import routes from './routes';
 
 const DefaultLayout = lazy(() => import('./layout/DefaultLayout'));
 
+// Create a client
+const queryClient = new QueryClient();
+
 function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <AuthenticatedApp />
+    </QueryClientProvider>
+  );
+}
+
+function AuthenticatedApp() {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {

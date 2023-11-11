@@ -1,10 +1,12 @@
 import { useState, Fragment } from 'react';
 import { Link } from 'react-router-dom';
-
+import { useQuery } from '@tanstack/react-query';
 import { Dialog, Transition } from '@headlessui/react';
 
 import MetricCard from '../../components/MetricCard';
-import ChatCard from '../../components/ChatCard.tsx';
+import ChatCard from '../../components/ChatCard';
+
+import { fetchStats } from '../../services/stats';
 
 const InsertMetricModal: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -219,6 +221,13 @@ const BMICard: React.FC = () => (
 );
 
 const ECommerce = () => {
+  const userId = 3;
+  const xQuery = useQuery({
+    queryKey: ['stats', userId],
+    queryFn: () => fetchStats(userId, 'year'),
+  });
+
+  const { dynamicAnalysis, staticAnalysis, stats } = xQuery.data;
   return (
     <>
       <div className="grid grid-cols w-full mb-4">
