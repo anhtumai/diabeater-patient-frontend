@@ -7,6 +7,7 @@ import LogoDark from '../../images/logo/logo-dark.svg';
 import Logo from '../../images/logo/logo.svg';
 
 import useAuth from '../../contexts/auth';
+import { VITES_BACKEND_URL } from '../../utils/constants';
 
 const SignIn = () => {
   const { setAuthState } = useAuth();
@@ -20,7 +21,7 @@ const SignIn = () => {
     }
     try {
       const response = await axios.post(
-        'http://172.20.10.10:8080/api/auth/signin',
+        `${VITES_BACKEND_URL}/api/auth/signin`,
         {
           username,
           password,
@@ -180,7 +181,6 @@ const SignIn = () => {
 
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
-              <span className="mb-1.5 block font-medium">Start for free</span>
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
                 Sign In to DiaBeatIt
               </h2>
