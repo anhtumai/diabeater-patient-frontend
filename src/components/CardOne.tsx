@@ -38,9 +38,11 @@ const MetricCard = (props: {
           </div>
         </div>
         <div className="col-span-2 grid grid-rows-4">
-          <div className="row-span-1">Average: {average}</div>
           <div className="row-span-1">
-            Latest ({date}): {latest}
+            Average: {average} {unit}
+          </div>
+          <div className="row-span-1">
+            Latest ({date}): {latest} {unit}
           </div>
           <div className="row-span-1">{generalAnalysis}</div>
           <div className="row-span-1 flex flex-row-reverse pt-5">

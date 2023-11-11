@@ -131,14 +131,92 @@ const InsertMetricModal: React.FC = () => {
   );
 };
 
-const BloodLevelCard = () => (
+const EAGLevelCard: React.FC = () => (
   <MetricCard
-    metricName="Blood Level"
-    unit="unit"
+    metricName="eAG"
+    unit="mg/dL"
     average={10.0}
     latest={12.0}
     date="11/11/2023"
-    generalAnalysis="Dcm frontend"
+    generalAnalysis="All is good"
+    changePercentage={0.43}
+    isUp={true}
+  />
+);
+
+const GMICard: React.FC = () => (
+  <MetricCard
+    metricName="GMI"
+    unit="mg/dL"
+    average={10.0}
+    latest={12.0}
+    date="11/11/2023"
+    generalAnalysis="All is good"
+    changePercentage={0.43}
+    isUp={true}
+  />
+);
+
+const CVCard: React.FC = () => (
+  <MetricCard
+    metricName="CV"
+    unit="%"
+    average={10.0}
+    latest={12.0}
+    date="11/11/2023"
+    generalAnalysis="All is good"
+    changePercentage={0.43}
+    isUp={true}
+  />
+);
+
+const TIRCard: React.FC = () => (
+  <MetricCard
+    metricName="TIR / TAR / TBR"
+    unit="%"
+    average={10.0}
+    latest={12.0}
+    date="11/11/2023"
+    generalAnalysis="All is good"
+    changePercentage={0.43}
+    isUp={true}
+  />
+);
+
+const HypoEventsCard: React.FC = () => (
+  <MetricCard
+    metricName="Hypoglycemic Events"
+    unit="mg/dL"
+    average={10.0}
+    latest={12.0}
+    date="11/11/2023"
+    generalAnalysis="All is good"
+    changePercentage={0.43}
+    isUp={true}
+  />
+);
+
+const HyperEventsCard: React.FC = () => (
+  <MetricCard
+    metricName="Hyperglycemic Events"
+    unit="mg/dL"
+    average={10.0}
+    latest={12.0}
+    date="11/11/2023"
+    generalAnalysis="All is good"
+    changePercentage={0.43}
+    isUp={true}
+  />
+);
+
+const BMICard: React.FC = () => (
+  <MetricCard
+    metricName="BMI"
+    unit="kg/m2"
+    average={10.0}
+    latest={12.0}
+    date="11/11/2023"
+    generalAnalysis="All is good"
     changePercentage={0.43}
     isUp={true}
   />
@@ -150,11 +228,14 @@ const ECommerce = () => {
       <div className="grid grid-cols w-full mb-4">
         <InsertMetricModal />
       </div>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
-        <BloodLevelCard />
-        <BloodLevelCard />
-        <BloodLevelCard />
-        <BloodLevelCard />
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-3 2xl:gap-7.5">
+        <EAGLevelCard />
+        <GMICard />
+        <CVCard />
+        <TIRCard />
+        <HypoEventsCard />
+        <HyperEventsCard />
+        <BMICard />
       </div>
 
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
