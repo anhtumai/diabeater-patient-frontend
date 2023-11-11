@@ -1,27 +1,133 @@
+import { useState, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
-import { MetricCard } from '../../components/CardOne';
-import CardFour from '../../components/CardFour.tsx';
-import CardOne from '../../components/CardOne.tsx';
-import CardThree from '../../components/CardThree.tsx';
-import CardTwo from '../../components/CardTwo.tsx';
-import ChartOne from '../../components/ChartOne.tsx';
-import ChartThree from '../../components/ChartThree.tsx';
-import ChartTwo from '../../components/ChartTwo.tsx';
-import ChatCard from '../../components/ChatCard.tsx';
-import MapOne from '../../components/MapOne.tsx';
-import TableOne from '../../components/TableOne.tsx';
-import ChartBMI from '../../components/ChartBMI';
+import { Dialog, Transition } from '@headlessui/react';
 
-const InsertNewDataButton = () => {
+import { MetricCard } from '../../components/CardOne';
+import ChatCard from '../../components/ChatCard.tsx';
+
+const InsertMetricModal: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
   return (
-    <Link
-      to="#"
-      className="inline-flex ml-auto items-center justify-center gap-2.5 rounded-full border border-primary py-4 px-10 text-center font-medium text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
-    >
-      <span></span>
-      Insert metrics
-    </Link>
+    <>
+      <div
+        className="inline-flex ml-auto items-center justify-center gap-2.5 rounded-full border border-primary py-4 px-10 text-center font-medium text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
+        onClick={openModal}
+      >
+        Insert metricss
+      </div>
+
+      <Transition appear show={isOpen} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black/25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden text-left align-middle shadow-xl trannsition-all rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                  <Dialog.Title
+                    as="h3"
+                    className="text-lg font-medium leading-6 text-gray-900"
+                  >
+                    Insert metrics
+                  </Dialog.Title>
+                  <div className="mt-2">
+                    <form action="#">
+                      <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                        <div className="flex flex-col gap-5.5 p-6.5">
+                          <div>
+                            <label className="mb-3 block text-black dark:text-white">
+                              Glucose Level (mg/dL)
+                            </label>
+                            <input
+                              type="number"
+                              step={0.01}
+                              placeholder="Glucose Level"
+                              className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                            />
+                          </div>
+                          <div>
+                            <label className="mb-3 block text-black dark:text-white">
+                              A1C level (mg/dL)
+                            </label>
+                            <input
+                              type="number"
+                              step={0.01}
+                              placeholder="A1C level"
+                              className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="mb-3 block text-black dark:text-white">
+                              Weight (kg)
+                            </label>
+                            <input
+                              type="number"
+                              placeholder="Weight"
+                              className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="mb-3 block text-black dark:text-white">
+                              Height (m)
+                            </label>
+                            <input
+                              type="number"
+                              step={0.01}
+                              placeholder="Height"
+                              className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+
+                  <div className="mt-4">
+                    <button
+                      type="button"
+                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      onClick={closeModal}
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
+    </>
   );
 };
 
@@ -42,7 +148,7 @@ const ECommerce = () => {
   return (
     <>
       <div className="grid grid-cols w-full mb-4">
-        <InsertNewDataButton />
+        <InsertMetricModal />
       </div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
         <BloodLevelCard />
@@ -66,3 +172,5 @@ const ECommerce = () => {
 //  <TableOne />
 //</div>;
 export default ECommerce;
+
+//                   className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
