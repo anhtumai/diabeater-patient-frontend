@@ -2,9 +2,12 @@ import { Suspense, lazy, useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 
-import Dashboard from './pages/Dashboard/ECommerce';
+import useAuth, { AuthProvider } from './contexts/auth';
+
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+
+import ECommerce from './pages/Dashboard/ECommerce';
 import SignIn from './pages/Authentication/SignIn';
-import SignUp from './pages/Authentication/SignUp';
 import Loader from './common/Loader';
 import routes, { doctorRoute } from './routes';
 import React from 'react';
@@ -23,6 +26,7 @@ import {
 
 import 'stream-chat-react/dist/css/v2/index.css';
 import './layout.css';
+import Dashboard from './pages/Dashboard/ECommerce';
 
 const userId = 'cool-limit-6';
 const userName = 'Jason Diabetes';
@@ -48,12 +52,36 @@ const channel = chatClient.channel('messaging', 'custom_channel_id', {
 });
 
 const DefaultLayout = lazy(() => import('./layout/DefaultLayout'));
-// 43ywm67bpfq7tuzdmgekepestyf8tapms2879kadcjcgmakaf624xb5eg3skswzn
+
+// Create a client
+const queryClient = new QueryClient();
+
+function AuthWrapper() {
+  return (
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  );
+}
+
 function App() {
-  useEffect(() => {
-    setTimeout(() => chatClient.disconnectUser()
-    , 2000);
-  }, []);
+  const { isAuthenticated } = useAuth();
+  if (isAuthenticated()) {
+    return (
+      <QueryClientProvider client={queryClient}>
+        <AuthenticatedApp />
+      </QueryClientProvider>
+    );
+  }
+  return <UnauthenticatedApp />;
+}
+
+function UnauthenticatedApp() {
+  return <SignIn />;
+}
+
+function AuthenticatedApp() {
+  const [loading, setLoading] = useState<boolean>(true);
 
   return (
     <>
@@ -64,26 +92,6 @@ function App() {
       />
 
       <Routes>
-        <Route path="/auth/signin" element={<SignIn />} />
-        <Route path="/auth/signup" element={<SignUp />} />
-
-        <Route element={<DoctorLayout />}>
-          {doctorRoute.map((routes, index) => {
-            const { path, component: Component } = routes;
-            return (
-              <Route
-                key={index}
-                path={path}
-                element={
-                  <Suspense fallback={<Loader />}>
-                    <Component />
-                  </Suspense>
-                }
-              />
-            );
-          })}
-        </Route>
-
         <Route element={<DefaultLayout />}>
           <Route index element={<Dashboard />} />
           {routes.map((routes, index) => {
@@ -119,4 +127,4 @@ function App() {
   );
 }
 
-export default App;
+export default AuthWrapper;

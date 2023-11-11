@@ -1,8 +1,12 @@
 import { useState, Fragment } from 'react';
+import { Link } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import { Dialog, Transition } from '@headlessui/react';
 
 import MetricCard from '../../components/MetricCard';
-import ChatCard from '../../components/ChatCard.tsx';
+import ChatCard from '../../components/ChatCard';
+
+import { fetchStats } from '../../services/stats';
 import React from 'react';
 
 const InsertMetricModal: React.FC = () => {
@@ -218,77 +222,13 @@ const BMICard: React.FC = () => (
 );
 
 const Dashboard = () => {
-  const mock = {
-    stats: [
-      {
-        id: 15,
-        userId: 3,
-        glucoseLevel: 185.0,
-        a1cLevel: 50.0,
-        eag: 1388.3,
-        gmi: 7.7352,
-        cv: 0.5405405,
-        weight: 50.0,
-        height: 178.0,
-        bmi: 15.780836,
-        createTime: '2023-11-11T18:59:39.846+00:00',
-      },
-      {
-        id: 6,
-        userId: 3,
-        glucoseLevel: 185.0,
-        a1cLevel: 50.0,
-        eag: 1388.3,
-        gmi: 7.7352,
-        cv: 0.5405405,
-        weight: 50.0,
-        height: 178.0,
-        bmi: 10.0,
-        createTime: '2023-11-11T12:56:27.695+00:00',
-      },
-      {
-        id: 7,
-        userId: 3,
-        glucoseLevel: 185.0,
-        a1cLevel: 50.0,
-        eag: 1388.3,
-        gmi: 7.7352,
-        cv: 0.5405405,
-        weight: 50.0,
-        height: 178.0,
-        bmi: 12.0,
-        createTime: '2023-11-07T12:56:27.695+00:00',
-      },
-      {
-        id: 8,
-        userId: 3,
-        glucoseLevel: 184.0,
-        a1cLevel: 50.0,
-        eag: 1388.3,
-        gmi: 7.7352,
-        cv: 0.5405405,
-        weight: 50.0,
-        height: 178.0,
-        bmi: 11.0,
-        createTime: '2023-10-11T12:56:27.695+00:00',
-      },
-    ],
-    staticAnalysis: {
-      a1cLevel: 'high',
-      gmi: 'high',
-      cv: 'low',
-      glucoseLevel: 'high',
-      eag: 'high',
-      bmi: 'low',
-    },
-    dynamicAnalysis: {
-      a1cLevel: 'stable',
-      gmi: 'stable',
-      glucoseLEvel: 'upward',
-      cv: 'stable',
-      eag: 'stable',
-    },
-  };
+  const userId = 3;
+  const xQuery = useQuery({
+    queryKey: ['stats', userId],
+    queryFn: () => fetchStats(userId, 'year'),
+  });
+
+  //const { dynamicAnalysis, staticAnalysis, stats } = xQuery.data;
   return (
     <>
       <div className="grid grid-cols w-full mb-4">
