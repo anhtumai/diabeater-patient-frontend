@@ -29,6 +29,9 @@ const MetricCard = (props: {
             <Link
               to="/chart"
               className="inline-flex items-center justify-center bg-black text-center font-small text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+              style={{
+                minWidth: '100px',
+              }}
             >
               Stats
             </Link>
