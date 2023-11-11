@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 
+import { MetricCard } from '../../components/CardOne';
 import CardFour from '../../components/CardFour.tsx';
 import CardOne from '../../components/CardOne.tsx';
 import CardThree from '../../components/CardThree.tsx';
@@ -23,6 +24,19 @@ const InsertNewDataButton = () => {
   );
 };
 
+const BloodLevelCard = () => (
+  <MetricCard
+    metricName="Blood Level"
+    unit="unit"
+    average={10.0}
+    latest={12.0}
+    date="11/11/2023"
+    generalAnalysis="Dcm frontend"
+    changePercentage={0.43}
+    isUp={true}
+  />
+);
+
 const ECommerce = () => {
   return (
     <>
@@ -30,6 +44,7 @@ const ECommerce = () => {
         <InsertNewDataButton />
       </div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
+        <BloodLevelCard />
         <CardOne />
         <CardTwo />
         <CardThree />

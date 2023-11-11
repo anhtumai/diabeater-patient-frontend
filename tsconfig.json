@@ -11,13 +11,22 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
+    "jsx": "react",
 
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "common": ["./src/common"],
+      "component": ["./src/components"],
+      "fonts": ["./src/fonts"],
+      "hooks": ["./src/hooks"],
+      "layout": ["./src/layout"],
+      "pages": ["./src/pages"],
+      "routes": ["./src/routes"]
+    }
   },
   "include": ["src", "src/lib.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
