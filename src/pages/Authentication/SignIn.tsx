@@ -7,8 +7,7 @@ import LogoDark from '../../images/logo/logo-dark.svg';
 import Logo from '../../images/logo/logo.svg';
 
 import useAuth from '../../contexts/auth';
-import { VITES_BACKEND_URL } from '../../utils/constants';
-import React from 'react';
+import { VITE_BACKEND_URL } from '../../utils/constants';
 
 const SignIn = () => {
   const { setAuthState } = useAuth();
@@ -21,13 +20,10 @@ const SignIn = () => {
       return;
     }
     try {
-      const response = await axios.post(
-        `${VITES_BACKEND_URL}/api/auth/signin`,
-        {
-          username,
-          password,
-        },
-      );
+      const response = await axios.post(`${VITE_BACKEND_URL}/api/auth/signin`, {
+        username,
+        password,
+      });
 
       if (response.status === 200) {
         const user = response.data.data;

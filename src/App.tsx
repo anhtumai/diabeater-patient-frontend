@@ -68,20 +68,20 @@ function AuthenticatedApp() {
     image: 'https://i.ticketweb.com/i/00/08/79/39/81/Original.jpg?v=1',
   };
 
-  const apiKey = 'ej4geb6tqveu';
-  const userToken =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNCJ9.EgY4I-MMZ9AuF2CVz6DmVUP38Te9DwlhSfmsAAPe4pM';
+  // const apiKey = 'ej4geb6tqveu';
+  // const userToken =
+  //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNCJ9.EgY4I-MMZ9AuF2CVz6DmVUP38Te9DwlhSfmsAAPe4pM';
 
-  const chatClient = new StreamChat(apiKey);
-  chatClient.connectUser(user, userToken);
+  // const chatClient = new StreamChat(apiKey);
+  // chatClient.connectUser(user, userToken);
 
-  const channel = chatClient.channel('messaging', 'health_channel_4', {
-    // add as many custom fields as you'd like
-    image:
-      'https://www.racefans.net/wp-content/uploads/2021/11/racefansdotnet-21-11-11-11-53-05-5.jpg',
-    name: 'Dr. Kimi Räikkönen',
-    members: ['4', '3'],
-  });
+  // const channel = chatClient.channel('messaging', 'health_channel_4', {
+  //   // add as many custom fields as you'd like
+  //   image:
+  //     'https://www.racefans.net/wp-content/uploads/2021/11/racefansdotnet-21-11-11-11-53-05-5.jpg',
+  //   name: 'Dr. Kimi Räikkönen',
+  //   members: ['4', '3'],
+  // });
 
   return (
     <>
