@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import Logo from '../common/logo';
+import Logo from '../common/Logo';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -104,8 +104,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <NavLink
                   to="/"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-boxdark duration-300 ease-in-out hover:bg-primary hover:text-white dark:hover:bg-meta-4 ${
-                    pathname === '/' &&
-                    'bg-primary text-white dark:bg-meta-4'
+                    pathname === '/' && 'bg-primary text-white dark:bg-meta-4'
                   }`}
                 >
                   <svg
@@ -143,7 +142,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <NavLink
                   to="/profile"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-boxdark duration-300 ease-in-out hover:bg-primary hover:text-white dark:hover:bg-meta-4 ${
-                    pathname.includes('profile') && 'bg-primary text-white dark:bg-meta-4'
+                    pathname.includes('profile') &&
+                    'bg-primary text-white dark:bg-meta-4'
                   }`}
                 >
                   <svg
@@ -167,7 +167,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 </NavLink>
               </li>
               {/* <!-- Menu Item Profile --> */}
-       
             </ul>
           </div>
         </nav>
