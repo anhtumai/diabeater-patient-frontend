@@ -12,6 +12,7 @@ import ChatCard from '../../components/ChatCard.tsx';
 import MapOne from '../../components/MapOne.tsx';
 import TableOne from '../../components/TableOne.tsx';
 import ChartBMI from '../../components/ChartBMI';
+import React from 'react';
 
 const InsertNewDataButton = () => {
   return (
