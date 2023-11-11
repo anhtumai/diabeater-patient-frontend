@@ -33,6 +33,7 @@ const SignIn = () => {
         setAuthState(user);
       }
     } catch (error) {
+      console.error(error);
       toast('Wrong username or password');
       setUsername('');
       setPassword('');

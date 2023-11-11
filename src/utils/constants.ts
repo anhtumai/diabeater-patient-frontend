@@ -1,3 +1,1 @@
-import 'dotenv/config';
-
-export const VITES_BACKEND_URL = process.env.VITES_BACKEND_URL || 'localhost';
+export const VITES_BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'localhost';
