@@ -6,7 +6,6 @@ import useAuth, { AuthProvider } from './contexts/auth';
 
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 
-import ECommerce from './pages/Dashboard/ECommerce';
 import SignIn from './pages/Authentication/SignIn';
 import Loader from './common/Loader';
 import routes, { doctorRoute } from './routes';
@@ -26,7 +25,7 @@ import {
 
 import 'stream-chat-react/dist/css/v2/index.css';
 import './layout.css';
-import Dashboard from './pages/Dashboard/ECommerce';
+import Dashboard from './pages/Dashboard/Dashboard';
 
 const userId = 'cool-limit-6';
 const userName = 'Jason Diabetes';
