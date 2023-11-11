@@ -227,7 +227,7 @@ const ECommerce = () => {
     queryFn: () => fetchStats(userId, 'year'),
   });
 
-  const { dynamicAnalysis, staticAnalysis, stats } = xQuery.data;
+  //const { dynamicAnalysis, staticAnalysis, stats } = xQuery.data;
   return (
     <>
       <div className="grid grid-cols w-full mb-4">

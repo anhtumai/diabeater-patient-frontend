@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import useAuth from '../contexts/auth';
 
 import UserOne from '../images/user/user-01.png';
 
 const DropdownUser = () => {
+  const { logout } = useAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const trigger = useRef<any>(null);
@@ -155,7 +157,10 @@ const DropdownUser = () => {
             </Link>
           </li>
         </ul>
-        <button className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
+        <button
+          className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
+          onClick={() => logout()}
+        >
           <svg
             className="fill-current"
             width="22"

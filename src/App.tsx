@@ -2,11 +2,12 @@ import { Suspense, lazy, useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 
+import useAuth, { AuthProvider } from './contexts/auth';
+
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 
 import ECommerce from './pages/Dashboard/ECommerce';
 import SignIn from './pages/Authentication/SignIn';
-import SignUp from './pages/Authentication/SignUp';
 import Loader from './common/Loader';
 import routes from './routes';
 
@@ -15,12 +16,28 @@ const DefaultLayout = lazy(() => import('./layout/DefaultLayout'));
 // Create a client
 const queryClient = new QueryClient();
 
-function App() {
+function AuthWrapper() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <AuthenticatedApp />
-    </QueryClientProvider>
+    <AuthProvider>
+      <App />
+    </AuthProvider>
   );
+}
+
+function App() {
+  const { isAuthenticated } = useAuth();
+  if (isAuthenticated()) {
+    return (
+      <QueryClientProvider client={queryClient}>
+        <AuthenticatedApp />
+      </QueryClientProvider>
+    );
+  }
+  return <UnauthenticatedApp />;
+}
+
+function UnauthenticatedApp() {
+  return <SignIn />;
 }
 
 function AuthenticatedApp() {
@@ -40,8 +57,6 @@ function AuthenticatedApp() {
         containerClassName="overflow-auto"
       />
       <Routes>
-        <Route path="/auth/signin" element={<SignIn />} />
-        <Route path="/auth/signup" element={<SignUp />} />
         <Route element={<DefaultLayout />}>
           <Route index element={<ECommerce />} />
           {routes.map((routes, index) => {
@@ -64,4 +79,4 @@ function AuthenticatedApp() {
   );
 }
 
-export default App;
+export default AuthWrapper;
