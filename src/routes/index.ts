@@ -1,5 +1,6 @@
 import { lazy } from 'react';
 
+const DoctorDashboard = lazy(() => import('../pages/Dashboard/DoctorDashboard'));
 const Calendar = lazy(() => import('../pages/Calendar'));
 const Chart = lazy(() => import('../pages/Chart'));
 const FormElements = lazy(() => import('../pages/Form/FormElements'));
@@ -58,5 +59,14 @@ const coreRoutes = [
   },
 ];
 
+
 const routes = [...coreRoutes];
+export const doctorRoute = [
+  {
+    path: '/doctor',
+    title: 'Doctor Dashboard',
+    component: DoctorDashboard,
+  },
+]
+
 export default routes;

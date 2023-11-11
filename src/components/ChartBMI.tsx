@@ -155,7 +155,7 @@ const ChartBMI: React.FC = () => {
     series: [
       {
         name: 'BMI',
-        data: bmi,
+        data: [1,23,4,5,6,7,8,9],
       },
     ],
   });

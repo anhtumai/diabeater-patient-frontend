@@ -7,6 +7,7 @@ import MetricCard from '../../components/MetricCard';
 import ChatCard from '../../components/ChatCard';
 
 import { fetchStats } from '../../services/stats';
+import React from 'react';
 
 const InsertMetricModal: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -220,7 +221,7 @@ const BMICard: React.FC = () => (
   />
 );
 
-const ECommerce = () => {
+const Dashboard = () => {
   const userId = 3;
   const xQuery = useQuery({
     queryKey: ['stats', userId],
@@ -257,6 +258,6 @@ const ECommerce = () => {
 //<div className="col-span-12 xl:col-span-8">
 //  <TableOne />
 //</div>;
-export default ECommerce;
+export default Dashboard;
 
 //                   className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
