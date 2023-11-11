@@ -13,7 +13,7 @@ const Chart = () => {
 
       <div className="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-7.5">
         <h1 className="text-xl font-semibold text-black dark:text-white">
-          BMI 
+          BMI
         </h1>
         <ChartBMI />
         <div className="col-span-12">
