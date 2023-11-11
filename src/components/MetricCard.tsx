@@ -53,8 +53,8 @@ function IconInfoCircle(props: React.SVGProps<SVGSVGElement>) {
     <svg
       viewBox="0 0 1024 1024"
       fill="currentColor"
-      height="1em"
-      width="1em"
+      height="1.5em"
+      width="1.5em"
       {...props}
     >
       <path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z" />
@@ -66,7 +66,10 @@ function IconInfoCircle(props: React.SVGProps<SVGSVGElement>) {
 function InfoPopover(props: { metric: string }) {
   const description = (metricsDetails[props.metric] as any).description;
   return (
-    <div className="tooltip tooltip-right" data-tip={description}>
+    <div
+      className="tooltip tooltip-right absolute right-4"
+      data-tip={description}
+    >
       <IconInfoCircle />
     </div>
   );
@@ -100,36 +103,62 @@ const MetricCard: React.FC = (props: {
   } = props;
   const { metricName, unit } = metricsDetails[metric];
   return (
-    <div className="rounded-sm border border-stroke bg-white py-4 px-5 shadow-default dark:border-strokedark dark:bg-boxdark">
+    <div className="group rounded-xl border border-stroke bg-white py-4 px-5 shadow-default dark:border-strokedark dark:bg-boxdark relative hover:bg-primary cursor-pointer hover:text-white transition-all">
       <InfoPopover metric={metric} />
-      <div className="grid grid-cols-3 grid-flow-row gap-2">
-        <div className="col-span-1 grid grid-rows-5">
-          <div className="row-span-3 my-auto">{metricName}</div>
-          <div className="row-span-2 pt-11">
-            <Link
-              to="/chart"
-              className="inline-flex items-center justify-center bg-black text-center font-small text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
-              style={{
-                minWidth: '100px',
-              }}
-            >
-              Stats
-            </Link>
-          </div>
-        </div>
-        <div className="col-span-2 grid grid-rows-4">
-          <div className="row-span-1">
-            Average: {average} {unit}
-          </div>
-          <div className="row-span-1">
-            Latest ({date}): {latest} {unit}
-          </div>
-          <div className="row-span-1">{generalAnalysis}</div>
-          <div className="row-span-1 flex flex-row-reverse pt-5">
-            {changePercentage}%
-          </div>
+      <div className="absolute bottom-3 right-3 flex items-center ">
+        <span className="text-primary font-bold text-xl group-hover:text-white">
+          {changePercentage}%
+        </span>
+
+        <svg fill="#D83F31" viewBox="0 0 16 16" height="2em" width="2em">
+          <path
+            fillRule="evenodd"
+            d="M8 12a.5.5 0 00.5-.5V5.707l2.146 2.147a.5.5 0 00.708-.708l-3-3a.5.5 0 00-.708 0l-3 3a.5.5 0 10.708.708L7.5 5.707V11.5a.5.5 0 00.5.5z"
+          />
+        </svg>
+
+        <svg
+          fill="#F4CE14"
+          viewBox="0 0 16 16"
+          height="2em"
+          width="2em"
+          {...props}
+        >
+          <path
+            fillRule="evenodd"
+            d="M8 4a.5.5 0 01.5.5v5.793l2.146-2.147a.5.5 0 01.708.708l-3 3a.5.5 0 01-.708 0l-3-3a.5.5 0 11.708-.708L7.5 10.293V4.5A.5.5 0 018 4z"
+          />
+        </svg>
+      </div>
+
+      <div className="flex">
+        <span className="row-span-3 my-auto font-bold text-lg w-40 text-graydark">
+          {metricName}
+        </span>
+        <div>
+          <p className="font-bold text-xl">
+            {average} {unit}
+          </p>
+          <span>Average</span>
         </div>
       </div>
+
+      <div className="mt-3">
+        <p>
+          Latest ({date}): {latest} {unit}
+        </p>
+        <p>{generalAnalysis}</p>
+      </div>
+
+      <Link
+        to="/chart"
+        className="inline-flex items-center justify-center bg-black text-center font-small text-white hover:bg-opacity-90 lg:px-8 xl:px-10 mt-5 rounded-sm"
+        style={{
+          minWidth: '100px',
+        }}
+      >
+        Detail
+      </Link>
     </div>
   );
 };

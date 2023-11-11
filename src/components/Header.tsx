@@ -4,6 +4,7 @@ import DarkModeSwitcher from './DarkModeSwitcher';
 import DropdownMessage from './DropdownMessage';
 import DropdownNotification from './DropdownNotification';
 import DropdownUser from './DropdownUser';
+import React from 'react';
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
