@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { Dialog, Transition } from '@headlessui/react';
 
-import { MetricCard } from '../../components/CardOne';
+import MetricCard from '../../components/MetricCard';
 import ChatCard from '../../components/ChatCard.tsx';
 
 const InsertMetricModal: React.FC = () => {
@@ -133,8 +133,7 @@ const InsertMetricModal: React.FC = () => {
 
 const EAGLevelCard: React.FC = () => (
   <MetricCard
-    metricName="eAG"
-    unit="mg/dL"
+    metric="eag"
     average={10.0}
     latest={12.0}
     date="11/11/2023"
@@ -146,8 +145,7 @@ const EAGLevelCard: React.FC = () => (
 
 const GMICard: React.FC = () => (
   <MetricCard
-    metricName="GMI"
-    unit="mg/dL"
+    metric="gmi"
     average={10.0}
     latest={12.0}
     date="11/11/2023"
@@ -159,7 +157,7 @@ const GMICard: React.FC = () => (
 
 const CVCard: React.FC = () => (
   <MetricCard
-    metricName="CV"
+    metric="cv"
     unit="%"
     average={10.0}
     latest={12.0}
@@ -172,7 +170,7 @@ const CVCard: React.FC = () => (
 
 const TIRCard: React.FC = () => (
   <MetricCard
-    metricName="TIR / TAR / TBR"
+    metric="tir"
     unit="%"
     average={10.0}
     latest={12.0}
@@ -185,8 +183,7 @@ const TIRCard: React.FC = () => (
 
 const HypoEventsCard: React.FC = () => (
   <MetricCard
-    metricName="Hypoglycemic Events"
-    unit="mg/dL"
+    metric="hypoevents"
     average={10.0}
     latest={12.0}
     date="11/11/2023"
@@ -198,7 +195,7 @@ const HypoEventsCard: React.FC = () => (
 
 const HyperEventsCard: React.FC = () => (
   <MetricCard
-    metricName="Hyperglycemic Events"
+    metric="hyperevents"
     unit="mg/dL"
     average={10.0}
     latest={12.0}
@@ -211,8 +208,7 @@ const HyperEventsCard: React.FC = () => (
 
 const BMICard: React.FC = () => (
   <MetricCard
-    metricName="BMI"
-    unit="kg/m2"
+    metric="bmi"
     average={10.0}
     latest={12.0}
     date="11/11/2023"
