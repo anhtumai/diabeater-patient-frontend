@@ -83,12 +83,15 @@ const PatientData = () => {
   }
 
   const patients = fetchPatientsQuery.data.data;
-  console.log("🚀 ~ file: PatientData.tsx:86 ~ PatientData ~ patients:", patients)
+  console.log(
+    '🚀 ~ file: PatientData.tsx:86 ~ PatientData ~ patients:',
+    patients,
+  );
   const patient = patients.find((item) => item.userId === Number(userId));
 
   return (
     <>
-      <Breadcrumb pageName="Patient Data Info" />
+      <Breadcrumb pageName="Patient Information" />
 
       <div>
         <p>General user info</p>
