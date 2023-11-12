@@ -55,11 +55,16 @@ const DoctorDashboard = () => {
         />
       </div>
 
-          <section className='mt-5'>
+      <section className="mt-5">
+        <TablePatient />
+      </section>
 
-      <TablePatient />
-          </section>
-    
+      <div className="modal-box bg-primary text-white slide-out text-lg mt-5">
+        <h3 className="text-lg font-bold">Welcome to DiaBeatIt Doctor Dashboard!</h3>
+        <p className="py-4">
+          This is the doctor dashboard. Our system based on the metric trends has identify several patients with abnormal metrics. Try to give your diagnoses, some of them could be in danger 😱😱😱.
+        </p>
+      </div>
     </>
   );
 };
