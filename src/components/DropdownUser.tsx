@@ -4,8 +4,20 @@ import useAuth from '../contexts/auth';
 
 import UserOne from '../images/user/user-01.png';
 
+import { useGetPatient } from '../services/patients';
+
 const DropdownUser = () => {
-  const { logout } = useAuth();
+  const { logout, authInfo } = useAuth();
+  const userId = authInfo!.id;
+
+  const getPatientQuery = useGetPatient(userId);
+
+  let fullName = '';
+  if (getPatientQuery.data) {
+    const patient = getPatientQuery.data.data;
+    fullName = patient.fullName;
+  }
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const trigger = useRef<any>(null);
@@ -47,9 +59,8 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            Thomas Anree
+            {fullName}
           </span>
-          <span className="block text-xs">UX Designer</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">
