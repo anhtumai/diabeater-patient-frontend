@@ -26,9 +26,9 @@ function getUserAvatar(userId: number) {
   return UserThree;
 }
 
-const SeverityPill = ({ severity }: { severity: string }) => {
+const StatusPill = ({ status }: { status: string }) => {
   let indicator;
-  switch (severity) {
+  switch (status.toLowerCase()) {
     case 'danger':
       indicator = 'bg-danger';
       break;
@@ -45,7 +45,7 @@ const SeverityPill = ({ severity }: { severity: string }) => {
 
   return (
     <p className={`w-20 text-center rounded-2xl text-white py-1 ${indicator}`}>
-      {capitalizeFirstLetter(severity)}
+      {capitalizeFirstLetter(status)}
     </p>
   );
 };
@@ -80,7 +80,7 @@ const TablePatient = () => {
           </div>
           <div className="p-2.5 text-center xl:p-5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Severity
+              Status
             </h5>
           </div>
           <div className="hidden p-2.5 text-center sm:block xl:p-5">
@@ -123,7 +123,7 @@ const TablePatient = () => {
             </div>
 
             <div className="flex items-center justify-center p-2.5 xl:p-5">
-              <SeverityPill severity={patient.status} />
+              <StatusPill status={patient.status} />
             </div>
 
             <div className="p-2.5 xl:p-5 ">
