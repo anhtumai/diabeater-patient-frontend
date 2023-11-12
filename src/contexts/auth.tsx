@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
-import React from 'react'
+import React from 'react';
 
 export type User = {
   id: number;
@@ -10,8 +10,7 @@ export type User = {
   age: number;
   status: number;
   description: string;
-  disease_type: string;
-  disease_start: string;
+  roles: string[];
 };
 
 interface AuthContextType {
