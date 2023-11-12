@@ -6,12 +6,40 @@ import { Dialog, Transition } from '@headlessui/react';
 import MetricCard from '../../components/MetricCard';
 import ChatCard from '../../components/ChatCard';
 
-import { fetchStats, useUserStats } from '../../services/stats';
+import {
+  fetchStats,
+  useCreateUserStats,
+  useUserStats,
+} from '../../services/stats';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+
 import React from 'react';
 import useAuth from '../../contexts/auth';
+import fireToast from '../../hooks/fireToast';
+import toast from 'react-hot-toast';
+
+const schema = z.object({
+  glucoseLevel: z.coerce.number({
+    required_error: 'Glucose level is required',
+  }),
+  a1cLevel: z.coerce.number({ required_error: 'A1C level is required' }),
+  weight: z.coerce.number(),
+  height: z.coerce.number(),
+});
 
 const InsertMetricModal: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { authInfo } = useAuth();
+  const { mutateAsync: createStat, isPending } = useCreateUserStats();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(schema),
+  });
 
   function closeModal() {
     setIsOpen(false);
@@ -19,6 +47,24 @@ const InsertMetricModal: React.FC = () => {
 
   function openModal() {
     setIsOpen(true);
+  }
+
+  async function handleCreateStat(data: any) {
+    toast("You're doing great!", {
+      position: 'bottom-right',
+      icon: (
+        <svg
+        fill="#00A9FF"
+          viewBox="0 0 16 16"
+          height="1em"
+          width="1em"
+        >
+          <path d="M16 8A8 8 0 110 8a8 8 0 0116 0zm-3.97-3.03a.75.75 0 00-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 00-1.06 1.06L6.97 11.03a.75.75 0 001.079-.02l3.992-4.99a.75.75 0 00-.01-1.05z" />
+        </svg>
+      ),
+    });
+    // await createStat({ ...data, userId: authInfo?.id });
+    closeModal();
   }
 
   return (
@@ -55,76 +101,92 @@ const InsertMetricModal: React.FC = () => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden text-left align-middle shadow-xl trannsition-all rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden text-left align-middle shadow-xl trannsition-all rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark p-5">
                   <Dialog.Title
                     as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900"
+                    className="text-xl font-bold leading-6 text-boxdark mb-2"
                   >
                     Insert metrics
                   </Dialog.Title>
-                  <div className="mt-2">
-                    <form action="#">
-                      <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                        <div className="flex flex-col gap-5.5 p-6.5">
-                          <div>
-                            <label className="mb-3 block text-black dark:text-white">
-                              Glucose Level (mg/dL)
-                            </label>
-                            <input
-                              type="number"
-                              step={0.01}
-                              placeholder="Glucose Level"
-                              className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                            />
-                          </div>
-                          <div>
-                            <label className="mb-3 block text-black dark:text-white">
-                              A1C level (mg/dL)
-                            </label>
-                            <input
-                              type="number"
-                              step={0.01}
-                              placeholder="A1C level"
-                              className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                            />
-                          </div>
 
-                          <div>
-                            <label className="mb-3 block text-black dark:text-white">
-                              Weight (kg)
-                            </label>
-                            <input
-                              type="number"
-                              placeholder="Weight"
-                              className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                            />
-                          </div>
-
-                          <div>
-                            <label className="mb-3 block text-black dark:text-white">
-                              Height (m)
-                            </label>
-                            <input
-                              type="number"
-                              step={0.01}
-                              placeholder="Height"
-                              className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                            />
-                          </div>
-                        </div>
+                  <form onSubmit={handleSubmit(handleCreateStat)}>
+                    <div className="flex flex-col gap-5.5 p-2">
+                      <div>
+                        <label className="mb-3 block text-black dark:text-white">
+                          Glucose Level (mg/dL)
+                        </label>
+                        <input
+                          {...register('glucoseLevel')}
+                          step={0.01}
+                          placeholder="Glucose Level"
+                          className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                        />
+                        {errors.glucoseLevel?.message && (
+                          <p className="text-danger mt-2">
+                            {errors.glucoseLevel?.message}
+                          </p>
+                        )}
                       </div>
-                    </form>
-                  </div>
+                      <div>
+                        <label className="mb-3 block text-black dark:text-white">
+                          A1C level (mg/dL)
+                        </label>
+                        <input
+                          {...register('a1cLevel')}
+                          step={0.01}
+                          placeholder="A1C level"
+                          className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                        />
+                        {errors.a1cLevel?.message && (
+                          <p className="text-danger mt-2">
+                            {errors.a1cLevel?.message}
+                          </p>
+                        )}
+                      </div>
 
-                  <div className="mt-4">
-                    <button
-                      type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={closeModal}
-                    >
-                      Submit
-                    </button>
-                  </div>
+                      <div>
+                        <label className="mb-3 block text-black dark:text-white">
+                          Weight (kg)
+                        </label>
+                        <input
+                          {...register('weight')}
+                          step={0.01}
+                          placeholder="A1C level"
+                          className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                        />
+                        {errors.weight?.message && (
+                          <p className="text-danger mt-2">
+                            {errors.weight?.message}
+                          </p>
+                        )}
+                      </div>
+
+                      <div>
+                        <label className="mb-3 block text-black dark:text-white">
+                          Height (m)
+                        </label>
+                        <input
+                          {...register('height')}
+                          step={0.01}
+                          placeholder="A1C level"
+                          className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                        />
+                        {errors.height?.message && (
+                          <p className="text-danger mt-2">
+                            {errors.height?.message}
+                          </p>
+                        )}
+                      </div>
+
+                      <button
+                        disabled={isPending}
+                        onClick={(e) => {}}
+                        className="mt-4 bg-primary w-full text-white py-5 hover:bg-opacity-90 inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </form>
                 </Dialog.Panel>
               </Transition.Child>
             </div>
@@ -140,9 +202,7 @@ const Dashboard = () => {
   const { data } = useUserStats(authInfo?.id.toString());
   return (
     <>
-      <div className="grid grid-cols w-full mb-4">
-        <InsertMetricModal />
-      </div>
+      
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-3 2xl:gap-7.5">
         {data &&
           data.data &&
