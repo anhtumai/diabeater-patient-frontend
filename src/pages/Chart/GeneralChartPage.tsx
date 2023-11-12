@@ -178,6 +178,7 @@ const metricToNameMap = {
 export const GeneralChartBody: React.FC = (props: {
   chartName: string;
   metric: 'glucoseLevel' | 'a1cLevel' | 'eag' | 'gmi' | 'cv' | 'bmi';
+  showHeader?: boolean;
 }) => {
   const { authInfo } = useAuth();
   const chartStatsQuery = useChartStats(authInfo!.id);
@@ -221,10 +222,16 @@ export const GeneralChartBody: React.FC = (props: {
   return (
     <>
       <div className="gap-4 md:gap-6 2xl:gap-7.5">
+        {props.showHeader ? (
+          <h5 className="text-sm text-title-md mb-3 font-semibold text-black dark:text-white">
+            {metricToNameMap[props.metric]}{' '}
+          </h5>
+        ) : null}
+
         <GeneralChart metric={props.metric} data={data} categories={days} />
-        <span className="">
+        <span className="text-lg px-4 py-4">
           <p>
-            Analysis: {dynamicComment}
+            Analysis: {dynamicComment}&nbsp;
             {staticComment}
           </p>
         </span>
