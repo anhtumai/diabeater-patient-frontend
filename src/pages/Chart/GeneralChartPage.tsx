@@ -6,6 +6,7 @@ import Breadcrumb from '../../components/Breadcrumb';
 import Loader from '../../common/Loader';
 
 import { useChartStats } from '../../services/stats';
+import useAuth from '../../contexts/auth';
 
 type Stat = {
   id: number;
@@ -178,7 +179,8 @@ export const GeneralChartBody: React.FC = (props: {
   chartName: string;
   metric: 'glucoseLevel' | 'a1cLevel' | 'eag' | 'gmi' | 'cv' | 'bmi';
 }) => {
-  const chartStatsQuery = useChartStats();
+  const { authInfo } = useAuth();
+  const chartStatsQuery = useChartStats(authInfo!.id);
 
   if (chartStatsQuery.isLoading) {
     return <Loader />;

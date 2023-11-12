@@ -8,6 +8,7 @@ import { GeneralChartBody } from './GeneralChartPage';
 import { GeneralChart } from './GeneralChartPage';
 
 import { useChartStats } from '../../services/stats';
+import useAuth from '../../contexts/auth';
 
 const ChartGlucoseLevelBody: React.FC = () => {
   return <GeneralChartBody chartName="Glucose Level" metric="glucoseLevel" />;
@@ -34,7 +35,8 @@ const ChartBMIBody: React.FC = () => {
 };
 
 const AllCharts = () => {
-  const chartStatsQuery = useChartStats();
+  const { authInfo } = useAuth();
+  const chartStatsQuery = useChartStats(authInfo!.id);
 
   if (chartStatsQuery.isLoading) {
     return <Loader />;

@@ -7,6 +7,7 @@ import {
   ChartCVPage,
   ChartBMIPage,
 } from '../pages/Chart/IndividualChartPages';
+import PatientData from '../pages/PatientData';
 
 const DoctorDashboard = lazy(
   () => import('../pages/Dashboard/DoctorDashboard'),
@@ -113,6 +114,11 @@ export const doctorRoute = [
     path: '/doctor',
     title: 'Doctor Dashboard',
     component: DoctorDashboard,
+  },
+  {
+    path: '/patients/:userId',
+    title: 'Patient Metrics',
+    component: PatientData,
   },
 ];
 
