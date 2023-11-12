@@ -1,33 +1,49 @@
 import { Link } from 'react-router-dom';
-import UserOne from '../images/user/user-01.png';
-import UserTwo from '../images/user/user-02.png';
-import UserThree from '../images/user/user-03.png';
-import UserFour from '../images/user/user-04.png';
-import UserFive from '../images/user/user-05.png';
+import DangerAnimated from '../images/animated/danger.gif';
 import React from 'react';
+
+export const copyPopup = {
+  initial: {
+      opacity: 0,
+      scale: 0.5
+  },
+  animate: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+          ease: "easeInOut",
+          duration: 0.1
+      }
+  },
+  exit: {
+      opacity: 0
+  }
+}
 
 const ChatCard = () => {
   return (
-    <div className="col-span-12 rounded-sm border border-stroke bg-white py-6 shadow-default dark:border-strokedark dark:bg-boxdark">
+    <div className="relative slide-in col-span-12 rounded-sm border border-stroke bg-white py-6 shadow-default dark:border-strokedark dark:bg-boxdark">
       <h4 className="mb-6 px-7.5 text-xl font-semibold text-black dark:text-white">
         Chats
       </h4>
+
+      <img className='absolute right-2 top-2 w-12' src={DangerAnimated} alt="" />
 
       <div>
         <Link
           to="/"
           className="flex items-center gap-5 py-3 px-7.5 hover:bg-gray-3 dark:hover:bg-meta-4"
         >
-          <div className="relative h-14 w-14 rounded-full">
-            <img src={UserFive} alt="User" />
+          <div className="relative h-16 w-16 rounded-full">
+            <img className='rounded-full w-16 h-16 object-cover' src={"https://www.themoviedb.org/t/p/original/t9Ap19WC4uPMTFNrmX0cTRU6GIn.jpg"} alt="User" />
             <span className="absolute right-0 bottom-0 h-3.5 w-3.5 rounded-full border-2 border-white bg-meta-6"></span>
           </div>
 
           <div className="flex flex-1 items-center justify-between">
             <div>
-              <h5 className="font-medium">Doctor Strange</h5>
+              <h5 className="font-medium">Dr. Kimi Räikkönen</h5>
               <p>
-                <span className="text-sm">I will send your precription</span>
+                <span className="text-md">Hi, looks like your glucose levels are on the rise, we should schedule a checkup</span>
                 <span className="text-xs"> . 10:12 PM</span>
               </p>
             </div>

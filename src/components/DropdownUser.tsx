@@ -5,7 +5,7 @@ import useAuth from '../contexts/auth';
 import UserOne from '../images/user/user-01.png';
 
 const DropdownUser = () => {
-  const { logout } = useAuth();
+  const { logout, authInfo } = useAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const trigger = useRef<any>(null);
@@ -47,9 +47,9 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            Thomas Anree
+            Mikko Doe
           </span>
-          <span className="block text-xs">UX Designer</span>
+          <span className="block text-xs">Type II Diabetes</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">

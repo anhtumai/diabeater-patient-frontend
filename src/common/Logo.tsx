@@ -5,7 +5,7 @@ import LogoImg from '../images/logo/logo.png';
 const Logo = () => {
   return (
     <NavLink className='w-full flex justify-center' to="/">
-      <img className='w-35' src={LogoImg} alt="Logo" />
+      <img className='w-56' src={LogoImg} alt="Logo" />
     </NavLink>
   );
 };

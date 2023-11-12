@@ -53,12 +53,7 @@ const InsertMetricModal: React.FC = () => {
     toast("You're doing great!", {
       position: 'bottom-right',
       icon: (
-        <svg
-        fill="#00A9FF"
-          viewBox="0 0 16 16"
-          height="1em"
-          width="1em"
-        >
+        <svg fill="#00A9FF" viewBox="0 0 16 16" height="1em" width="1em">
           <path d="M16 8A8 8 0 110 8a8 8 0 0116 0zm-3.97-3.03a.75.75 0 00-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 00-1.06 1.06L6.97 11.03a.75.75 0 001.079-.02l3.992-4.99a.75.75 0 00-.01-1.05z" />
         </svg>
       ),
@@ -69,11 +64,23 @@ const InsertMetricModal: React.FC = () => {
 
   return (
     <>
-      <div
-        className="inline-flex ml-auto items-center justify-center gap-2.5 rounded-full border border-primary py-4 px-10 text-center font-medium text-primary hover:bg-opacity-90 lg:px-8 xl:px-10"
+      <button
+        className="bg-primary font-bold text-xl text-white inline-flex ml-auto items-center justify-center gap-2.5 rounded-xl border border-primary py-4 px-10 text-center hover:bg-opacity-90 lg:px-8 xl:px-10"
         onClick={openModal}
       >
         Insert metricss
+      </button>
+
+      {/* Put this part before </body> tag */}
+      <input type="checkbox" id="my_modal_7" className="modal-toggle" />
+      <div className="moda relative slide-out text-lg">
+        <div className="modal-box bg-primary text-white">
+          <h3 className="text-lg font-bold">Hello!</h3>
+          <p className="py-4">This is patient homepage. Try to add some new metrics by clicking the Insert button, then logout and login again with provided doctor account to continue!</p>
+        </div>
+        <label className="modal-backdrop" htmlFor="my_modal_7">
+          Close
+        </label>
       </div>
 
       <Transition appear show={isOpen} as={Fragment}>
