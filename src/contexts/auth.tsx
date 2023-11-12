@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
 import React from 'react'
 
-type User = {
+export type User = {
   id: number;
   email: string;
   password: string;
@@ -16,6 +16,7 @@ type User = {
 
 interface AuthContextType {
   authState: User | null;
+  getUser: () => User | null;
   setAuthState: (x: User) => void;
   authInfo: User | null;
   logout: () => void;
@@ -55,6 +56,10 @@ export function AuthProvider({
 
   const [authState, setAuthState] = useState(loggedUser);
 
+  function getUser() {
+    return loggedUser;
+  }
+
   function setAuthInfo(newUser: User) {
     storageUtils.saveLoggedUser(newUser);
     setAuthState(newUser);
@@ -73,6 +78,7 @@ export function AuthProvider({
     <AuthContext.Provider
       value={{
         authState,
+        getUser,
         setAuthState: (authInfo: User) => setAuthInfo(authInfo),
         authInfo: authState,
         logout,

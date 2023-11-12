@@ -28,12 +28,10 @@ function InfoPopover({ description }: { description: string }) {
   );
 }
 
-const ChangeInStat = ({stat}: {stat: number}) => {
+const ChangeInStat = ({ stat }: { stat: number }) => {
   return (
     <>
-      <span className="font-bold text-xl group-hover:text-white">
-        {stat}%
-      </span>
+      <span className="font-bold text-xl group-hover:text-white">{stat}%</span>
 
       {stat > 0 ? (
         <svg fill="#D83F31" viewBox="0 0 16 16" height="2em" width="2em">
@@ -62,7 +60,6 @@ const MetricCard: React.FC = (props: {
     | 'tir'
     | 'hypoevents'
     | 'hyperevents'
-    | 'bmi'
     | 'bmi';
   average: number;
   latest: number;
@@ -109,7 +106,7 @@ const MetricCard: React.FC = (props: {
       </div>
 
       <Link
-        to="/chart"
+        to={`/chart/${metricName}`}
         className="inline-flex items-center justify-center bg-black text-center font-small text-white hover:bg-opacity-90 lg:px-8 xl:px-10 mt-5 rounded-sm"
         style={{
           minWidth: '100px',

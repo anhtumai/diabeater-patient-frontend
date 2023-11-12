@@ -1,4 +1,5 @@
 import axios from 'axios';
+import useAuth from '../contexts/auth';
 
 import { VITE_BACKEND_URL } from '../utils/constants';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -8,6 +9,16 @@ async function fetchStats(userId: number, range: 'year' | 'week' | 'month') {
     `${VITE_BACKEND_URL}/api/stats?userId=${userId}&range=${range}`,
   );
   return response.data;
+}
+
+function useChartStats() {
+  const { getUser } = useAuth();
+  const user = getUser()!;
+
+  return useQuery({
+    queryKey: ['chartStats', user.id],
+    queryFn: () => fetchStats(user.id, 'week'),
+  });
 }
 
 const useUserStats = (userId?: string) => {
@@ -34,4 +45,4 @@ const useCreateUserStats = () => {
   });
 };
 
-export { fetchStats, useUserStats, useCreateUserStats };
+export { fetchStats, useUserStats, useCreateUserStats, useChartStats };
