@@ -91,7 +91,7 @@ const TablePatient = () => {
         </div>
 
         {patients.map((patient) => (
-          <div className="grid grid-cols-3 border-b border-stroke dark:border-strokedark sm:grid-cols-4">
+          <Link  to={`/patients/${patient.userId}`} className="grid grid-cols-3 border-b border-stroke dark:border-strokedark sm:grid-cols-4">
             <div className="flex items-center gap-3 p-2.5 xl:p-5 relative">
               <div className="flex-shrink-0">
                 <img
@@ -109,9 +109,9 @@ const TablePatient = () => {
 
                 <span>{`${patient.gender}, ${patient.age}`} years</span>
               </div>
-              {patient.status === 'danger' && (
+              {patient.status === 'Danger' && (
                 <img
-                  className="w-8 absolute -right-5"
+                  className="w-8 absolute right-0"
                   src={DangerAnimated}
                   alt="danger icon"
                 />
@@ -131,7 +131,7 @@ const TablePatient = () => {
                 <p className="text-black dark:text-white">{detail}</p>
               ))}
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
