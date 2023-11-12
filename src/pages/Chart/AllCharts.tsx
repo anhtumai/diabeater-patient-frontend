@@ -8,6 +8,15 @@ import { GeneralChartBody } from './GeneralChartPage';
 import { GeneralChart } from './GeneralChartPage';
 
 import { useChartStats } from '../../services/stats';
+import useAuth from '../../contexts/auth';
+
+const ChartGlucoseLevelBody: React.FC = () => {
+  return <GeneralChartBody chartName="Glucose Level" metric="glucoseLevel" />;
+};
+
+const ChartA1CBody: React.FC = () => {
+  return <GeneralChartBody chartName="A1C" metric="a1cLevel" />;
+};
 
 const ChartEAGBody: React.FC = () => {
   return <GeneralChartBody chartName="EAG" metric="eag" />;
@@ -26,7 +35,8 @@ const ChartBMIBody: React.FC = () => {
 };
 
 const AllCharts = () => {
-  const chartStatsQuery = useChartStats();
+  const { authInfo } = useAuth();
+  const chartStatsQuery = useChartStats(authInfo!.id);
 
   if (chartStatsQuery.isLoading) {
     return <Loader />;
@@ -36,6 +46,8 @@ const AllCharts = () => {
     <>
       <Breadcrumb pageName="Chart" />
 
+      <ChartGlucoseLevelBody />
+      <ChartA1CBody />
       <ChartEAGBody />
       <ChartGMIBody />
       <ChartCVBody />

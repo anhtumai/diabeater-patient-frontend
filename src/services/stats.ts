@@ -11,13 +11,10 @@ async function fetchStats(userId: number, range: 'year' | 'week' | 'month') {
   return response.data;
 }
 
-function useChartStats() {
-  const { getUser } = useAuth();
-  const user = getUser()!;
-
+function useChartStats(userId: number) {
   return useQuery({
-    queryKey: ['chartStats', user.id],
-    queryFn: () => fetchStats(user.id, 'week'),
+    queryKey: ['chartStats', userId],
+    queryFn: () => fetchStats(userId, 'week'),
   });
 }
 

@@ -64,23 +64,23 @@ const InsertMetricModal: React.FC = () => {
 
   return (
     <>
-      <button
-        className="bg-primary font-bold text-xl text-white inline-flex ml-auto items-center justify-center gap-2.5 rounded-xl border border-primary py-4 px-10 text-center hover:bg-opacity-90 lg:px-8 xl:px-10"
-        onClick={openModal}
-      >
-        Insert metricss
-      </button>
-
-      {/* Put this part before </body> tag */}
-      <input type="checkbox" id="my_modal_7" className="modal-toggle" />
-      <div className="moda relative slide-out text-lg">
-        <div className="modal-box bg-primary text-white">
-          <h3 className="text-lg font-bold">Hello!</h3>
-          <p className="py-4">This is patient homepage. Try to add some new metrics by clicking the Insert button, then logout and login again with provided doctor account to continue!</p>
+      <div className='flex items-end'>
+        {/* Put this part before </body> tag */}
+        <div className="modal-box bg-primary text-white slide-out text-lg">
+          <h3 className="text-lg font-bold">Welcome to DiaBeatIt!</h3>
+          <p className="py-4">
+            This is patient homepage. Try to add some new metrics by clicking
+            the Insert button, then logout and login again with provided doctor
+            account to continue!
+          </p>
         </div>
-        <label className="modal-backdrop" htmlFor="my_modal_7">
-          Close
-        </label>
+
+        <button
+          className="bg-primary font-bold text-xl text-white inline-flex ml-auto items-center justify-center gap-2.5 rounded-xl border border-primary py-4 px-10 text-center hover:bg-opacity-90 lg:px-8 xl:px-10"
+          onClick={openModal}
+        >
+          Insert metricss
+        </button>
       </div>
 
       <Transition appear show={isOpen} as={Fragment}>
@@ -215,18 +215,20 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-3 2xl:gap-7.5">
         {data &&
           data.data &&
-          data?.data?.data.map((item) => (
-            <MetricCard
-              metricName={item.metricName}
-              average={item.average}
-              latest={item.latest}
-              unit={item.unit}
-              description={item.description}
-              generalAnalysis="All is good"
-              changePercentage={item.change}
-              isUp={true}
-            />
-          ))}
+          data?.data?.data.map((item) => {
+            return (
+              <MetricCard
+                metricName={item.metricName}
+                average={item.average}
+                latest={item.latest}
+                unit={item.unit}
+                description={item.description}
+                generalAnalysis="All is good"
+                changePercentage={item.change}
+                isUp={true}
+              />
+            );
+          })}
 
         {/* <EAGLevelCard />
         <GMICard />

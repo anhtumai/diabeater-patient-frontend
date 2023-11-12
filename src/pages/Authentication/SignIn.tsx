@@ -4,7 +4,7 @@ import axios from 'axios';
 import { toast, Toaster } from 'react-hot-toast';
 
 import LogoDark from '../../images/logo/logo-dark.svg';
-import Logo from '../../images/logo/logo.svg';
+import Logo from '../../images/logo/logo.png';
 
 import useAuth from '../../contexts/auth';
 import { VITE_BACKEND_URL } from '../../utils/constants';
@@ -39,19 +39,17 @@ const SignIn = () => {
   }
   return (
     <>
-      <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+      <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark pb-20">
         <div className="flex flex-wrap items-center">
           <div className="hidden w-full xl:block xl:w-1/2">
-            <div className="py-17.5 px-26 text-center">
-              <Link className="mb-5.5 inline-block" to="/">
-                <img className="hidden dark:block" src={Logo} alt="Logo" />
-                <img className="dark:hidden" src={LogoDark} alt="Logo" />
+            <div className=" px-26 text-center">
+              <Link className=" text-center flex justify-center" to="/">
+                <img className="w-2/3" src={Logo} alt="Logo" />
               </Link>
 
-              <p className="2xl:px-20">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                suspendisse.
-              </p>
+              <h1 className="text-2xl font-semibold px-20">
+                Your Path to Sustainable, Timely Care for Timeless Health
+              </h1>
 
               <span className="mt-15 inline-block">
                 <svg
@@ -261,6 +259,24 @@ const SignIn = () => {
                   />
                 </div>
               </form>
+
+              <section>
+                <h2 className="mb-2 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
+                  Testing Account
+                </h2>
+
+                <div>
+                  <p className='font-semibold'>Patient</p>
+                  <p>Username: patient</p>
+                  <span>Password: 123456</span>
+                </div>
+
+                <div className='mt-2'>
+                  <p className='font-semibold'>Doctor</p>
+                  <p>Username: doctor</p>
+                  <span>Password: 123456</span>
+                </div>
+              </section>
             </div>
           </div>
         </div>

@@ -47,9 +47,10 @@ function App() {
   const { isAuthenticated, authInfo } = useAuth();
 
   if (isAuthenticated()) {
+    const role = authInfo!.roles[0];
     return (
       <QueryClientProvider client={queryClient}>
-        <AuthenticatedApp />
+        {role === 'ROLE_PATIENT' ? <PatientApp /> : <DoctorApp />}
       </QueryClientProvider>
     );
   }
@@ -60,9 +61,7 @@ function UnauthenticatedApp() {
   return <SignIn />;
 }
 
- function AuthenticatedApp() {
-  const { authInfo } = useAuth();
-
+function PatientApp() {
   return (
     <>
       <Toaster
@@ -72,23 +71,6 @@ function UnauthenticatedApp() {
       />
 
       <Routes>
-        <Route path="/doctor" element={<DoctorLayout />}>
-          <Route index element={<DoctorDashboard />} />
-          {doctorRoute.map((routes, index) => {
-            const { path, component: Component } = routes;
-            return (
-              <Route
-                key={index}
-                path={path}
-                element={
-                  <Suspense fallback={<Loader />}>
-                    <Component />
-                  </Suspense>
-                }
-              />
-            );
-          })}
-        </Route>
         <Route element={<DefaultLayout />}>
           <Route index element={<Dashboard />} />
           {routes.map((routes, index) => {
@@ -107,7 +89,38 @@ function UnauthenticatedApp() {
           })}
         </Route>
       </Routes>
+    </>
+  );
+}
 
+function DoctorApp() {
+  return (
+    <>
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+        containerClassName="overflow-auto"
+      />
+
+      <Routes>
+        <Route element={<DoctorLayout />}>
+          <Route index element={<DoctorDashboard />} />
+          {doctorRoute.map((routes, index) => {
+            const { path, component: Component } = routes;
+            return (
+              <Route
+                key={index}
+                path={path}
+                element={
+                  <Suspense fallback={<Loader />}>
+                    <Component />
+                  </Suspense>
+                }
+              />
+            );
+          })}
+        </Route>
+      </Routes>
     </>
   );
 }

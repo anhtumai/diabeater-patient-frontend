@@ -6,10 +6,29 @@ import UserFour from '../../images/user/user-04.png';
 import UserFive from '../../images/user/user-05.png';
 import { capitalizeFirstLetter } from '../../helper';
 import DangerAnimated from '../../images/animated/danger.gif';
+import { Link } from 'react-router-dom';
+import { useFetchPatients } from '../../services/patients';
+import Loader from '../../common/Loader';
 
-const SeverityPill = ({ severity }: { severity: string }) => {
+type Patient = {
+  userId: number;
+  age: number;
+  fullName: string;
+  gender: string;
+  status: string;
+  details: string[];
+};
+
+function getUserAvatar(userId: number) {
+  if (userId === 3) {
+    return UserOne;
+  }
+  return UserThree;
+}
+
+const StatusPill = ({ status }: { status: string }) => {
   let indicator;
-  switch (severity) {
+  switch (status.toLowerCase()) {
     case 'danger':
       indicator = 'bg-danger';
       break;
@@ -26,58 +45,21 @@ const SeverityPill = ({ severity }: { severity: string }) => {
 
   return (
     <p className={`w-20 text-center rounded-2xl text-white py-1 ${indicator}`}>
-      {capitalizeFirstLetter(severity)}
+      {capitalizeFirstLetter(status)}
     </p>
   );
 };
 const TablePatient = () => {
-  const data = [
-    {
-      name: 'Adam Messy',
-      age: 28,
-      sex: 'Male',
-      severity: 'danger',
-      type: '1',
-      warning: ['GMI closed to threshold', 'eAG below average', 'Unusual TIR'],
-      avatar: UserOne,
-    },
-    {
-      name: 'Celine Ohio',
-      age: 38,
-      sex: 'Female',
-      type: '2',
-      severity: 'danger',
-      warning: ['GMI closed to threshold', 'eAG below average', 'Unusual TIR'],
-      avatar: UserTwo,
-    },
-    {
-      name: 'Mathias Jason',
-      age: 40,
-      sex: 'Female',
-      type: 'G',
-      severity: 'high',
-      warning: ['GMI closed to threshold', 'eAG below average'],
-      avatar: UserThree,
-    },
-    {
-      name: 'Olivia Lee',
-      age: 49,
-      sex: 'Female',
-      type: '2',
-      severity: 'high',
-      warning: ['GMI closed to threshold', 'eAG below average'],
-      avatar: UserFour,
-    },
-    {
-      name: 'Duc Vu',
-      age: 27,
-      sex: 'Male',
-      type: 'G',
-      severity: 'warning',
-      warning: ['GMI closed to threshold'],
-      avatar: UserFive,
-    },
-  ];
+  const fetchPatientsQuery = useFetchPatients();
+
+  console.log('Fetch Patient Query', fetchPatientsQuery);
+
+  if (fetchPatientsQuery.isLoading) {
+    return <Loader />;
+  }
+
+  const patients: Patient[] = fetchPatientsQuery.data.data;
+
   return (
     <div className="rounded-xl border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
@@ -98,7 +80,7 @@ const TablePatient = () => {
           </div>
           <div className="p-2.5 text-center xl:p-5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Severity
+              Status
             </h5>
           </div>
           <div className="hidden p-2.5 text-center sm:block xl:p-5">
@@ -108,32 +90,45 @@ const TablePatient = () => {
           </div>
         </div>
 
-        {data.map((item) => (
+        {patients.map((patient) => (
           <div className="grid grid-cols-3 border-b border-stroke dark:border-strokedark sm:grid-cols-4">
             <div className="flex items-center gap-3 p-2.5 xl:p-5 relative">
               <div className="flex-shrink-0">
-                <img className="w-10" src={item.avatar} alt="" />
+                <img
+                  className="w-10"
+                  src={getUserAvatar(patient.userId)}
+                  alt=""
+                />
               </div>
               <div>
-                <p className="hidden text-black dark:text-white sm:block">
-                  {item.name}
-                </p>
-                <span>{`${item.sex}, ${item.age}`} years</span>
+                <Link to={`/patients/${patient.userId}`}>
+                  <p className="hidden text-black dark:text-white sm:block">
+                    {patient.fullName}
+                  </p>
+                </Link>
+
+                <span>{`${patient.gender}, ${patient.age}`} years</span>
               </div>
-              {item.severity === 'danger' && <img className='w-8 absolute -right-5' src={DangerAnimated} alt="danger icon" />}
+              {patient.status === 'danger' && (
+                <img
+                  className="w-8 absolute -right-5"
+                  src={DangerAnimated}
+                  alt="danger icon"
+                />
+              )}
             </div>
 
             <div className=" items-center justify-center p-2.5 xl:p-5 hidden sm:flex">
-              <p className="text-black dark:text-white ">{item.type}</p>
+              <p className="text-black dark:text-white ">{patient.type}</p>
             </div>
 
             <div className="flex items-center justify-center p-2.5 xl:p-5">
-              <SeverityPill severity={item.severity} />
+              <StatusPill status={patient.status} />
             </div>
 
             <div className="p-2.5 xl:p-5 ">
-              {item.warning.map((item) => (
-                <p className="text-black dark:text-white">{item}</p>
+              {patient.details.map((detail) => (
+                <p className="text-black dark:text-white">{detail}</p>
               ))}
             </div>
           </div>

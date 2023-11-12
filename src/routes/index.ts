@@ -1,10 +1,13 @@
 import { lazy } from 'react';
 import {
+  ChartGlucoseLevelPage,
+  ChartA1CPage,
   ChartEAGPage,
   ChartGMIPage,
   ChartCVPage,
   ChartBMIPage,
 } from '../pages/Chart/IndividualChartPages';
+import PatientData from '../pages/PatientData';
 
 const DoctorDashboard = lazy(
   () => import('../pages/Dashboard/DoctorDashboard'),
@@ -69,6 +72,21 @@ const coreRoutes = [
 
 const chartRoutes = [
   {
+    path: '/chart/glucoseLevel',
+    title: 'Chart Glucose Level',
+    component: ChartGlucoseLevelPage,
+  },
+  {
+    path: '/chart/a1c',
+    title: 'Chart A1C',
+    component: ChartA1CPage,
+  },
+  {
+    path: '/chart/bmi',
+    title: 'Chart BMI',
+    component: ChartBMIPage,
+  },
+  {
     path: '/chart/eag',
     title: 'Chart EAG',
     component: ChartEAGPage,
@@ -96,6 +114,11 @@ export const doctorRoute = [
     path: '/doctor',
     title: 'Doctor Dashboard',
     component: DoctorDashboard,
+  },
+  {
+    path: '/patients/:userId',
+    title: 'Patient Metrics',
+    component: PatientData,
   },
 ];
 

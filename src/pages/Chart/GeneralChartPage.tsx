@@ -6,16 +6,23 @@ import Breadcrumb from '../../components/Breadcrumb';
 import Loader from '../../common/Loader';
 
 import { useChartStats } from '../../services/stats';
+import useAuth from '../../contexts/auth';
 
 type Stat = {
   id: number;
   userId: number;
+  glucoseLevel: number;
+  a1cLevel: number;
   eag: number;
   gmi: number;
   cv: number;
   bmi: number;
   createTime: string;
 };
+
+type DynamicAnalysisOptions = 'downward' | 'upward' | 'stable';
+
+type StaticAnalysisOptions = 'low' | 'high' | 'normal';
 
 function generateOptions(categories: string[]): ApexOptions {
   return {
@@ -159,17 +166,49 @@ function getDayMonthFromTime(time: string) {
   return `${day}/${month}`;
 }
 
+const metricToNameMap = {
+  glucoseLevel: 'Glucose Level',
+  a1cLevel: 'A1C Level',
+  eag: 'EAG',
+  gmi: 'GMI',
+  cv: 'CV',
+  bmi: 'BMI',
+};
+
 export const GeneralChartBody: React.FC = (props: {
   chartName: string;
-  metric: 'eag' | 'gmi' | 'cv' | 'bmi';
+  metric: 'glucoseLevel' | 'a1cLevel' | 'eag' | 'gmi' | 'cv' | 'bmi';
 }) => {
-  const chartStatsQuery = useChartStats();
+  const { authInfo } = useAuth();
+  const chartStatsQuery = useChartStats(authInfo!.id);
 
   if (chartStatsQuery.isLoading) {
     return <Loader />;
   }
 
-  const { stats } = chartStatsQuery.data.data;
+  const { stats, dynamicAnalysis, staticAnalysis } = chartStatsQuery.data.data;
+
+  const dynamicStatus = dynamicAnalysis[props.metric];
+  const staticStatus = staticAnalysis[props.metric];
+
+  const metricName = metricToNameMap[props.metric];
+  let dynamicComment = '';
+  if (dynamicStatus === 'downward') {
+    dynamicComment = `During one week period, ${metricName} level has decreased.`;
+  } else if (dynamicStatus === 'upward') {
+    dynamicComment = `During one week period, ${metricName} level has increased.`;
+  } else {
+    dynamicComment = `During one week period, ${metricName} level stays the same.`;
+  }
+
+  let staticComment = '';
+  if (staticStatus === 'low') {
+    staticComment = `The metric is lower than the threshold.`;
+  } else if (staticStatus === 'high') {
+    staticComment = `The metric is higher than the threshold.`;
+  } else {
+    staticComment = `The metric is normal. All is good.`;
+  }
 
   const data: string[] = (stats as Stat[])
     .map((stat) => (stat as any)[props.metric])
@@ -181,11 +220,13 @@ export const GeneralChartBody: React.FC = (props: {
 
   return (
     <>
-      <div className="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-7.5">
-        <h1 className="text-xl font-semibold text-black dark:text-white">
-          {props.metric}
-        </h1>
+      <div className="gap-4 md:gap-6 2xl:gap-7.5">
         <GeneralChart metric={props.metric} data={data} categories={days} />
+        <span>
+          <p>Analysis</p>
+          <p>{dynamicComment}</p>
+          <p>{staticComment}</p>
+        </span>
       </div>
     </>
   );
@@ -193,7 +234,7 @@ export const GeneralChartBody: React.FC = (props: {
 
 const GeneralChartPage: React.FC = (props: {
   chartName: string;
-  metric: 'eag' | 'gmi' | 'cv' | 'bmi';
+  metric: 'glucoseLevel' | 'a1cLevel' | 'eag' | 'gmi' | 'cv' | 'bmi';
 }) => {
   return (
     <>

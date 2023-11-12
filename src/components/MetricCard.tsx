@@ -60,6 +60,8 @@ const MetricCard: React.FC = (props: {
     | 'tir'
     | 'hypoevents'
     | 'hyperevents'
+    | 'Glucose Level'
+    | 'A1C Level'
     | 'bmi';
   average: number;
   latest: number;
@@ -79,8 +81,24 @@ const MetricCard: React.FC = (props: {
     generalAnalysis,
     changePercentage,
   } = props;
+
+  let redirectPath: string = metricName;
+  if (metricName === 'Glucose Level') {
+    redirectPath = 'glucoseLevel';
+  }
+  if (metricName === 'A1C Level') {
+    redirectPath = 'a1c';
+  }
+
   return (
-    <div className="group rounded-xl border border-stroke bg-white py-4 px-5 shadow-default dark:border-strokedark dark:bg-boxdark relative hover:bg-primary cursor-pointer hover:text-white transition-all">
+    <Link
+        to={`/chart/${redirectPath}`}
+        className="group rounded-xl border border-stroke bg-white py-4 px-5 shadow-default dark:border-strokedark dark:bg-boxdark relative hover:bg-primary cursor-pointer hover:text-white transition-all"
+        style={{
+          minWidth: '100px',
+        }}
+      >
+
       <InfoPopover description={description} />
       <div className="absolute bottom-3 right-3 flex items-center ">
         <ChangeInStat stat={changePercentage} />
@@ -106,7 +124,7 @@ const MetricCard: React.FC = (props: {
       </div>
 
       <Link
-        to={`/chart/${metricName}`}
+        to={`/chart/${redirectPath}`}
         className="inline-flex items-center justify-center bg-black text-center font-small text-white hover:bg-opacity-90 lg:px-8 xl:px-10 mt-5 rounded-sm"
         style={{
           minWidth: '100px',
@@ -114,7 +132,7 @@ const MetricCard: React.FC = (props: {
       >
         Detail
       </Link>
-    </div>
+    </Link>
   );
 };
 
