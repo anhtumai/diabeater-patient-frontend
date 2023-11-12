@@ -1,8 +1,16 @@
 import { lazy } from 'react';
+import {
+  ChartEAGPage,
+  ChartGMIPage,
+  ChartCVPage,
+  ChartBMIPage,
+} from '../pages/Chart/IndividualChartPages';
 
-const DoctorDashboard = lazy(() => import('../pages/Dashboard/DoctorDashboard'));
+const DoctorDashboard = lazy(
+  () => import('../pages/Dashboard/DoctorDashboard'),
+);
 const Calendar = lazy(() => import('../pages/Calendar'));
-const Chart = lazy(() => import('../pages/Chart'));
+const AllCharts = lazy(() => import('../pages/Chart/AllCharts'));
 const FormElements = lazy(() => import('../pages/Form/FormElements'));
 const FormLayout = lazy(() => import('../pages/Form/FormLayout'));
 const Profile = lazy(() => import('../pages/Profile'));
@@ -45,7 +53,7 @@ const coreRoutes = [
   {
     path: '/chart',
     title: 'Chart',
-    component: Chart,
+    component: AllCharts,
   },
   {
     path: '/ui/alerts',
@@ -59,14 +67,36 @@ const coreRoutes = [
   },
 ];
 
+const chartRoutes = [
+  {
+    path: '/chart/eag',
+    title: 'Chart EAG',
+    component: ChartEAGPage,
+  },
+  {
+    path: '/chart/gmi',
+    title: 'Chart GMI',
+    component: ChartGMIPage,
+  },
+  {
+    path: '/chart/cv',
+    title: 'Chart CV',
+    component: ChartCVPage,
+  },
+  {
+    path: '/chart/bmi',
+    title: 'Chart BMI',
+    component: ChartBMIPage,
+  },
+];
 
-const routes = [...coreRoutes];
+const routes = [...coreRoutes, ...chartRoutes];
 export const doctorRoute = [
   {
     path: '/doctor',
     title: 'Doctor Dashboard',
     component: DoctorDashboard,
   },
-]
+];
 
 export default routes;

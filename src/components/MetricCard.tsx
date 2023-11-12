@@ -76,15 +76,7 @@ function InfoPopover(props: { metric: string }) {
 }
 
 const MetricCard: React.FC = (props: {
-  metric:
-    | 'eag'
-    | 'gmi'
-    | 'cv'
-    | 'tir'
-    | 'hypoevents'
-    | 'hyperevents'
-    | 'bmi'
-    | 'bmi';
+  metric: 'eag' | 'gmi' | 'cv' | 'tir' | 'hypoevents' | 'hyperevents' | 'bmi';
   average: number;
   latest: number;
   date: string;
@@ -151,7 +143,7 @@ const MetricCard: React.FC = (props: {
       </div>
 
       <Link
-        to="/chart"
+        to={`/chart/${metric}`}
         className="inline-flex items-center justify-center bg-black text-center font-small text-white hover:bg-opacity-90 lg:px-8 xl:px-10 mt-5 rounded-sm"
         style={{
           minWidth: '100px',
