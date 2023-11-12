@@ -124,8 +124,8 @@ const InsertMetricModal: React.FC = () => {
                         </label>
                         <input
                           {...register('glucoseLevel')}
-                          step={0.01}
-                          placeholder="Glucose Level"
+                          step={1}
+                          placeholder="example: 180"
                           className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                         />
                         {errors.glucoseLevel?.message && (
@@ -140,8 +140,8 @@ const InsertMetricModal: React.FC = () => {
                         </label>
                         <input
                           {...register('a1cLevel')}
-                          step={0.01}
-                          placeholder="A1C level"
+                          step={1}
+                          placeholder="example: 6"
                           className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                         />
                         {errors.a1cLevel?.message && (
@@ -157,8 +157,8 @@ const InsertMetricModal: React.FC = () => {
                         </label>
                         <input
                           {...register('weight')}
-                          step={0.01}
-                          placeholder="A1C level"
+                          step={1}
+                          placeholder="example: 80"
                           className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                         />
                         {errors.weight?.message && (
@@ -170,12 +170,12 @@ const InsertMetricModal: React.FC = () => {
 
                       <div>
                         <label className="mb-3 block text-black dark:text-white">
-                          Height (m)
+                          Height (cm)
                         </label>
                         <input
                           {...register('height')}
-                          step={0.01}
-                          placeholder="A1C level"
+                          step={1}
+                          placeholder="example: 180"
                           className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                         />
                         {errors.height?.message && (
