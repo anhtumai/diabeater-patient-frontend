@@ -221,7 +221,7 @@ export const GeneralChartBody: React.FC = (props: {
       <div className="gap-4 md:gap-6 2xl:gap-7.5">
         <GeneralChart metric={props.metric} data={data} categories={days} />
         <span>
-          <p>AI General Comment</p>
+          <p>Analysis</p>
           <p>{dynamicComment}</p>
           <p>{staticComment}</p>
         </span>
