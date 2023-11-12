@@ -9,6 +9,14 @@ import { GeneralChart } from './GeneralChartPage';
 
 import { useChartStats } from '../../services/stats';
 
+const ChartGlucoseLevelBody: React.FC = () => {
+  return <GeneralChartBody chartName="Glucose Level" metric="glucoseLevel" />;
+};
+
+const ChartA1CBody: React.FC = () => {
+  return <GeneralChartBody chartName="A1C" metric="a1cLevel" />;
+};
+
 const ChartEAGBody: React.FC = () => {
   return <GeneralChartBody chartName="EAG" metric="eag" />;
 };
@@ -36,6 +44,8 @@ const AllCharts = () => {
     <>
       <Breadcrumb pageName="Chart" />
 
+      <ChartGlucoseLevelBody />
+      <ChartA1CBody />
       <ChartEAGBody />
       <ChartGMIBody />
       <ChartCVBody />

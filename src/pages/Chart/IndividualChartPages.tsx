@@ -1,5 +1,13 @@
 import GeneralChartPage from './GeneralChartPage';
 
+export const ChartGlucoseLevelPage: React.FC = () => {
+  return <GeneralChartPage chartName="Glucose Level" metric="glucoseLevel" />;
+};
+
+export const ChartA1CPage: React.FC = () => {
+  return <GeneralChartPage chartName="A1C" metric="a1cLevel" />;
+};
+
 export const ChartEAGPage: React.FC = () => {
   return <GeneralChartPage chartName="EAG" metric="eag" />;
 };

@@ -1,5 +1,7 @@
 import { lazy } from 'react';
 import {
+  ChartGlucoseLevelPage,
+  ChartA1CPage,
   ChartEAGPage,
   ChartGMIPage,
   ChartCVPage,
@@ -68,6 +70,21 @@ const coreRoutes = [
 ];
 
 const chartRoutes = [
+  {
+    path: '/chart/glucoseLevel',
+    title: 'Chart Glucose Level',
+    component: ChartGlucoseLevelPage,
+  },
+  {
+    path: '/chart/a1c',
+    title: 'Chart A1C',
+    component: ChartA1CPage,
+  },
+  {
+    path: '/chart/bmi',
+    title: 'Chart BMI',
+    component: ChartBMIPage,
+  },
   {
     path: '/chart/eag',
     title: 'Chart EAG',

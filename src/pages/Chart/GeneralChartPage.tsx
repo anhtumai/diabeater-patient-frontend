@@ -10,6 +10,8 @@ import { useChartStats } from '../../services/stats';
 type Stat = {
   id: number;
   userId: number;
+  glucoseLevel: number;
+  a1cLevel: number;
   eag: number;
   gmi: number;
   cv: number;
@@ -161,7 +163,7 @@ function getDayMonthFromTime(time: string) {
 
 export const GeneralChartBody: React.FC = (props: {
   chartName: string;
-  metric: 'eag' | 'gmi' | 'cv' | 'bmi';
+  metric: 'glucoseLevel' | 'a1cLevel' | 'eag' | 'gmi' | 'cv' | 'bmi';
 }) => {
   const chartStatsQuery = useChartStats();
 
@@ -170,6 +172,8 @@ export const GeneralChartBody: React.FC = (props: {
   }
 
   const { stats } = chartStatsQuery.data.data;
+
+  console.log('Stats', stats);
 
   const data: string[] = (stats as Stat[])
     .map((stat) => (stat as any)[props.metric])
@@ -193,7 +197,7 @@ export const GeneralChartBody: React.FC = (props: {
 
 const GeneralChartPage: React.FC = (props: {
   chartName: string;
-  metric: 'eag' | 'gmi' | 'cv' | 'bmi';
+  metric: 'glucoseLevel' | 'a1cLevel' | 'eag' | 'gmi' | 'cv' | 'bmi';
 }) => {
   return (
     <>
