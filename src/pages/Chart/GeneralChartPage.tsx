@@ -229,7 +229,7 @@ export const GeneralChartBody: React.FC = (props: {
         ) : null}
 
         <GeneralChart metric={props.metric} data={data} categories={days} />
-        <span className="text-lg px-4 py-4">
+        <span className="text-lg text-black font-medium px-4 py-4">
           <p>
             Analysis: {dynamicComment}&nbsp;
             {staticComment}
