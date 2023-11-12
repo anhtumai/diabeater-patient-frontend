@@ -50,6 +50,7 @@ const InsertMetricModal: React.FC = () => {
   }
 
   async function handleCreateStat(data: any) {
+    await createStat({ ...data, userId: authInfo?.id });
     toast("You're doing great!", {
       position: 'bottom-right',
       icon: (
@@ -58,13 +59,12 @@ const InsertMetricModal: React.FC = () => {
         </svg>
       ),
     });
-    // await createStat({ ...data, userId: authInfo?.id });
     closeModal();
   }
 
   return (
     <>
-      <div className='flex items-end'>
+      <div className="flex items-end">
         {/* Put this part before </body> tag */}
         <div className="modal-box bg-primary text-white slide-out text-lg">
           <h3 className="text-lg font-bold">Welcome to DiaBeatIt!</h3>
@@ -79,7 +79,7 @@ const InsertMetricModal: React.FC = () => {
           className="bg-primary font-bold text-xl text-white inline-flex ml-auto items-center justify-center gap-2.5 rounded-xl border border-primary py-4 px-10 text-center hover:bg-opacity-90 lg:px-8 xl:px-10"
           onClick={openModal}
         >
-          Insert metricss
+          Insert metrics
         </button>
       </div>
 
