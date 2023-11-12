@@ -4,8 +4,21 @@ import useAuth from '../contexts/auth';
 
 import UserOne from '../images/user/user-01.png';
 
+import { useGetPatient } from '../services/patients';
+import React from 'react';
+
 const DropdownUser = () => {
   const { logout, authInfo } = useAuth();
+  const userId = authInfo!.id;
+
+  const getPatientQuery = useGetPatient(userId);
+
+  let fullName = '';
+  if (getPatientQuery.data) {
+    const patient = getPatientQuery.data.data;
+    fullName = patient.fullName;
+  }
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const trigger = useRef<any>(null);
@@ -47,9 +60,8 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            Mikko Doe
+            {fullName}
           </span>
-          <span className="block text-xs">Type II Diabetes</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">
