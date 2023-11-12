@@ -6,8 +6,10 @@ import UserOne from '../images/user/user-01.png';
 
 import { useGetPatient } from '../services/patients';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const DropdownUser = () => {
+  const navigate = useNavigate();
   const { logout, authInfo } = useAuth();
   const userId = authInfo!.id;
 
@@ -171,7 +173,10 @@ const DropdownUser = () => {
         </ul>
         <button
           className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
-          onClick={() => logout()}
+          onClick={() => {
+            navigate('/');
+            logout();
+          }}
         >
           <svg
             className="fill-current"

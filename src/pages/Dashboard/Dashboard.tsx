@@ -50,6 +50,7 @@ const InsertMetricModal: React.FC = () => {
   }
 
   async function handleCreateStat(data: any) {
+    await createStat({ ...data, userId: authInfo?.id });
     toast("You're doing great!", {
       position: 'bottom-right',
       icon: (
@@ -58,13 +59,12 @@ const InsertMetricModal: React.FC = () => {
         </svg>
       ),
     });
-    // await createStat({ ...data, userId: authInfo?.id });
     closeModal();
   }
 
   return (
     <>
-      <div className='flex items-end'>
+      <div className="flex items-end">
         {/* Put this part before </body> tag */}
         <div className="modal-box bg-primary text-white slide-out text-lg">
           <h3 className="text-lg font-bold">Welcome to DiaBeatIt!</h3>
@@ -79,7 +79,7 @@ const InsertMetricModal: React.FC = () => {
           className="bg-primary font-bold text-xl text-white inline-flex ml-auto items-center justify-center gap-2.5 rounded-xl border border-primary py-4 px-10 text-center hover:bg-opacity-90 lg:px-8 xl:px-10"
           onClick={openModal}
         >
-          Insert metricss
+          Insert metrics
         </button>
       </div>
 
@@ -124,8 +124,8 @@ const InsertMetricModal: React.FC = () => {
                         </label>
                         <input
                           {...register('glucoseLevel')}
-                          step={0.01}
-                          placeholder="Glucose Level"
+                          step={1}
+                          placeholder="example: 180"
                           className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                         />
                         {errors.glucoseLevel?.message && (
@@ -140,8 +140,8 @@ const InsertMetricModal: React.FC = () => {
                         </label>
                         <input
                           {...register('a1cLevel')}
-                          step={0.01}
-                          placeholder="A1C level"
+                          step={1}
+                          placeholder="example: 6"
                           className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                         />
                         {errors.a1cLevel?.message && (
@@ -157,8 +157,8 @@ const InsertMetricModal: React.FC = () => {
                         </label>
                         <input
                           {...register('weight')}
-                          step={0.01}
-                          placeholder="A1C level"
+                          step={1}
+                          placeholder="example: 80"
                           className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                         />
                         {errors.weight?.message && (
@@ -170,12 +170,12 @@ const InsertMetricModal: React.FC = () => {
 
                       <div>
                         <label className="mb-3 block text-black dark:text-white">
-                          Height (m)
+                          Height (cm)
                         </label>
                         <input
                           {...register('height')}
-                          step={0.01}
-                          placeholder="A1C level"
+                          step={1}
+                          placeholder="example: 180"
                           className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                         />
                         {errors.height?.message && (
