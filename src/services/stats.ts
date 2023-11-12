@@ -8,7 +8,6 @@ async function fetchStats(userId: number, range: 'year' | 'week' | 'month') {
   const response = await axios.get(
     `${VITE_BACKEND_URL}/api/stats?userId=${userId}&range=${range}`,
   );
-  console.log('Response data', response.data);
   return response.data;
 }
 
@@ -22,4 +21,14 @@ function useChartStats() {
   });
 }
 
-export { fetchStats, useChartStats };
+const useUserStats = (userId?: string) => {
+  return useQuery({
+    queryKey: ['stats', userId],
+    queryFn: () =>
+      axios.get(`${VITE_BACKEND_URL}/api/stats/frontPage`, {
+        params: { userId },
+      }),
+  });
+};
+
+export { fetchStats, useChartStats, useUserStats };

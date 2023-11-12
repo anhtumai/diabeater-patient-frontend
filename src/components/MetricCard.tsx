@@ -2,52 +2,6 @@ import * as React from 'react';
 
 import { Link } from 'react-router-dom';
 
-const metricsDetails = {
-  eag: {
-    metricName: 'eAG',
-    unit: 'mg/dL',
-    description:
-      'Estimated average glucose (eAG) is an estimated average of your blood sugar (glucose) levels over a period of 2 to 3 months.\nKnowing your eAG helps you know your blood sugar levels over time. It shows how well you are controlling your diabetes.',
-  },
-  gmi: {
-    metricName: 'GMI (A1C)',
-    unit: 'mg/dL',
-    description:
-      'The glucose management indicator (GMI) is a metric that helps people with diabetes understand the current state of their glucose management.',
-  },
-  cv: {
-    metricName: 'CV',
-    unit: '%',
-    description:
-      'Coefficient of Variation is a measure of glucose variability.',
-  },
-  tir: {
-    metricName: 'TIR / TAR / TBR',
-    unit: '%',
-    description: `Time In Range (TIR) is the percentage of time the blood sugar levels stay within a predetermined range for people with diabetes\n
-      Time Above Range (TAR) is the percentage of time they stay above the range.\n
-      Time Below Range (TBR) is the percentage of time they stay above the range.`,
-  },
-  hypoevents: {
-    metricName: 'Hypoglycemic Events',
-    unit: 'mg/dL',
-    description:
-      'The count of hypoglycemic events is typically a simple tally of the number of times that glucose values fall below a certain threshold (e.g., 70 mg/dL for adults). The duration of these events could also be tracked.',
-  },
-  hyperevents: {
-    metricName: 'Hyperglycemic Events',
-    unit: 'mg/dL',
-    description:
-      'The count of hyperglycemic events is a tally of the times that glucose values rise above a certain threshold (e.g., 180 mg/dL for adults). The duration of these events can also be tracked.',
-  },
-  bmi: {
-    metricName: 'BMI',
-    unit: 'kg/m2',
-    description:
-      'BMI is a measure used to determine whether a person has a healthy body weight for their height',
-  },
-};
-
 function IconInfoCircle(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
@@ -63,8 +17,7 @@ function IconInfoCircle(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-function InfoPopover(props: { metric: string }) {
-  const description = (metricsDetails[props.metric] as any).description;
+function InfoPopover({ description }: { description: string }) {
   return (
     <div
       className="tooltip tooltip-right absolute right-4"
@@ -75,60 +28,70 @@ function InfoPopover(props: { metric: string }) {
   );
 }
 
-const MetricCard: React.FC = (props: {
-  metric: 'eag' | 'gmi' | 'cv' | 'tir' | 'hypoevents' | 'hyperevents' | 'bmi';
-  average: number;
-  latest: number;
-  date: string;
-  generalAnalysis: string;
-  changePercentage: number;
-  isUp: boolean;
-}) => {
-  const {
-    metric,
-    average,
-    latest,
-    date,
-    generalAnalysis,
-    changePercentage,
-    isUp,
-  } = props;
-  const { metricName, unit } = metricsDetails[metric];
+const ChangeInStat = ({ stat }: { stat: number }) => {
   return (
-    <div className="group rounded-xl border border-stroke bg-white py-4 px-5 shadow-default dark:border-strokedark dark:bg-boxdark relative hover:bg-primary cursor-pointer hover:text-white transition-all">
-      <InfoPopover metric={metric} />
-      <div className="absolute bottom-3 right-3 flex items-center ">
-        <span className="text-primary font-bold text-xl group-hover:text-white">
-          {changePercentage}%
-        </span>
+    <>
+      <span className="font-bold text-xl group-hover:text-white">{stat}%</span>
 
+      {stat > 0 ? (
         <svg fill="#D83F31" viewBox="0 0 16 16" height="2em" width="2em">
           <path
             fillRule="evenodd"
             d="M8 12a.5.5 0 00.5-.5V5.707l2.146 2.147a.5.5 0 00.708-.708l-3-3a.5.5 0 00-.708 0l-3 3a.5.5 0 10.708.708L7.5 5.707V11.5a.5.5 0 00.5.5z"
           />
         </svg>
-
-        <svg
-          fill="#F4CE14"
-          viewBox="0 0 16 16"
-          height="2em"
-          width="2em"
-          {...props}
-        >
+      ) : (
+        <svg fill="#F4CE14" viewBox="0 0 16 16" height="2em" width="2em">
           <path
             fillRule="evenodd"
             d="M8 4a.5.5 0 01.5.5v5.793l2.146-2.147a.5.5 0 01.708.708l-3 3a.5.5 0 01-.708 0l-3-3a.5.5 0 11.708-.708L7.5 10.293V4.5A.5.5 0 018 4z"
           />
         </svg>
+      )}
+    </>
+  );
+};
+
+const MetricCard: React.FC = (props: {
+  metricName:
+    | 'eag'
+    | 'gmi'
+    | 'cv'
+    | 'tir'
+    | 'hypoevents'
+    | 'hyperevents'
+    | 'bmi';
+  average: number;
+  latest: number;
+  date: string;
+  unit: string;
+  description: string;
+  generalAnalysis: string;
+  changePercentage: number;
+  isUp: boolean;
+}) => {
+  const {
+    average,
+    latest,
+    unit,
+    metricName,
+    description,
+    generalAnalysis,
+    changePercentage,
+  } = props;
+  return (
+    <div className="group rounded-xl border border-stroke bg-white py-4 px-5 shadow-default dark:border-strokedark dark:bg-boxdark relative hover:bg-primary cursor-pointer hover:text-white transition-all">
+      <InfoPopover description={description} />
+      <div className="absolute bottom-3 right-3 flex items-center ">
+        <ChangeInStat stat={changePercentage} />
       </div>
 
       <div className="flex">
-        <span className="row-span-3 my-auto font-bold text-lg w-40 text-graydark">
+        <span className="group-hover:text-white row-span-3 my-auto font-bold text-lg w-40 text-graydark">
           {metricName}
         </span>
         <div>
-          <p className="font-bold text-xl">
+          <p className="group-hover:text-white font-bold text-xl text-primary">
             {average} {unit}
           </p>
           <span>Average</span>
@@ -137,13 +100,13 @@ const MetricCard: React.FC = (props: {
 
       <div className="mt-3">
         <p>
-          Latest ({date}): {latest} {unit}
+          Latest: {latest} {unit}
         </p>
         <p>{generalAnalysis}</p>
       </div>
 
       <Link
-        to={`/chart/${metric}`}
+        to={`/chart/${metricName}`}
         className="inline-flex items-center justify-center bg-black text-center font-small text-white hover:bg-opacity-90 lg:px-8 xl:px-10 mt-5 rounded-sm"
         style={{
           minWidth: '100px',

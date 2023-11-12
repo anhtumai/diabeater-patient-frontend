@@ -1,5 +1,6 @@
 import React, { useState, Fragment } from 'react';
 
+import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Dialog, Transition } from '@headlessui/react';
 
@@ -7,8 +8,8 @@ import MetricCard from '../../components/MetricCard';
 import ChatCard from '../../components/ChatCard';
 import Loader from '../../common/Loader';
 
-import { fetchStats } from '../../services/stats';
 import useAuth, { User } from '../../contexts/auth';
+import { fetchStats, useUserStats } from '../../services/stats';
 
 const InsertMetricModal: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -135,122 +136,41 @@ const InsertMetricModal: React.FC = () => {
   );
 };
 
-const EAGLevelCard: React.FC = () => (
-  <MetricCard
-    metric="eag"
-    average={10.0}
-    latest={12.0}
-    date="11/11/2023"
-    generalAnalysis="All is good"
-    changePercentage={0.43}
-    isUp={true}
-  />
-);
-
-const GMICard: React.FC = () => (
-  <MetricCard
-    metric="gmi"
-    average={10.0}
-    latest={12.0}
-    date="11/11/2023"
-    generalAnalysis="All is good"
-    changePercentage={0.43}
-    isUp={true}
-  />
-);
-
-const CVCard: React.FC = () => (
-  <MetricCard
-    metric="cv"
-    unit="%"
-    average={10.0}
-    latest={12.0}
-    date="11/11/2023"
-    generalAnalysis="All is good"
-    changePercentage={0.43}
-    isUp={true}
-  />
-);
-
-const TIRCard: React.FC = () => (
-  <MetricCard
-    metric="tir"
-    unit="%"
-    average={10.0}
-    latest={12.0}
-    date="11/11/2023"
-    generalAnalysis="All is good"
-    changePercentage={0.43}
-    isUp={true}
-  />
-);
-
-const HypoEventsCard: React.FC = () => (
-  <MetricCard
-    metric="hypoevents"
-    average={10.0}
-    latest={12.0}
-    date="11/11/2023"
-    generalAnalysis="All is good"
-    changePercentage={0.43}
-    isUp={true}
-  />
-);
-
-const HyperEventsCard: React.FC = () => (
-  <MetricCard
-    metric="hyperevents"
-    unit="mg/dL"
-    average={10.0}
-    latest={12.0}
-    date="11/11/2023"
-    generalAnalysis="All is good"
-    changePercentage={0.43}
-    isUp={true}
-  />
-);
-
-const BMICard: React.FC = () => (
-  <MetricCard
-    metric="bmi"
-    average={10.0}
-    latest={12.0}
-    date="11/11/2023"
-    generalAnalysis="All is good"
-    changePercentage={0.43}
-    isUp={true}
-  />
-);
-
 const Dashboard = () => {
   const { getUser } = useAuth();
   const user = getUser() as User;
   const userId = user.id;
-  const xQuery = useQuery({
-    queryKey: ['stats', userId],
-    queryFn: () => fetchStats(userId, 'year'),
-  });
 
-  if (xQuery.isLoading) {
-    return Loader;
-  }
-
-  const { dynamicAnalysis, staticAnalysis, stats } = xQuery.data.data;
-
-  console.log('Dynamic Analysis', dynamicAnalysis);
+  const { data } = useUserStats(userId.toString());
   return (
     <>
       <div className="grid grid-cols w-full mb-4">
         <InsertMetricModal />
       </div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-3 2xl:gap-7.5">
-        <EAGLevelCard />
+        {data &&
+          data.data &&
+          data?.data?.data.map((item, index) => (
+            <MetricCard
+              key={index}
+              metricName={item.metricName}
+              average={item.average}
+              latest={item.latest}
+              unit={item.unit}
+              description={item.description}
+              generalAnalysis="All is good"
+              changePercentage={item.change}
+              isUp={true}
+            />
+          ))}
+
+        {/* <EAGLevelCard />
         <GMICard />
         <CVCard />
         <TIRCard />
         <HypoEventsCard />
         <HyperEventsCard />
-        <BMICard />
+        <BMICard /> */}
       </div>
 
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
@@ -260,13 +180,4 @@ const Dashboard = () => {
   );
 };
 
-//<ChartOne />
-//    <ChartTwo />
-//       <ChartThree />
-//       <MapOne />
-//<div className="col-span-12 xl:col-span-8">
-//  <TableOne />
-//</div>;
 export default Dashboard;
-
-//                   className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
